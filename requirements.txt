@@ -1,8 +1,4 @@
-streamlit
 numpy
 matplotlib
-pandas
-sqlalchemy
-pg8000
-plotly
-seaborn
+scipy
+streamlit
