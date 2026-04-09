@@ -94,9 +94,6 @@ ax1.scatter(data["t"], data["v_noisy"], color='red', s=8, alpha=0.5, label='Sens
 ax1.set_ylabel("Velocity (m/s)"); ax1.legend(loc='lower right'); ax1.grid(True, alpha=0.3)
 ax1.set_xlim(time_range)
 
-    
-
-
 # Acceleration
 ax2.fill_between(data["t"], data["a_ana"] - data["a_uncert_abs"], data["a_ana"] + data["a_uncert_abs"], color='blue', alpha=0.15)
 ax2.plot(data["t"], data["a_ana"], 'k')
@@ -121,6 +118,16 @@ if auto_scale:
     v_visible = data["v_noisy"][mask]
     if len(v_visible) > 0:
         ax1.set_ylim(np.min(v_visible) - 0.5, np.max(v_visible) + 0.5)
+
+    # 3. Zoom AX2 (Acceleration)
+    a_visible = data["a_ana"][mask] # Using analytical to avoid outlier spikes
+    if len(a_visible) > 0:
+        ax2.set_ylim(np.min(a_visible) - 1.0, np.max(a_visible) + 1.0)
+
+    # 4. Zoom AX3 (Position)
+    y_visible = data["y_noisy"][mask]
+    if len(y_visible) > 0:
+        ax3.set_ylim(np.min(y_visible) - 1.0, np.max(y_visible) + 1.0)
 
 st.pyplot(fig1)
 
