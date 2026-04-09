@@ -4,7 +4,7 @@ import numpy as np
 from scipy.stats import norm
 from app.models import run_physics_simulation
 
-st.set_page_config(page_title="Physics Uncertainty Lab", layout="wide")
+st.set_page_config(page_title="Physics Uncertainty Lab", layout="wide") 
 st.title("🪂 Advanced Projectile Lab: Fluid Dynamics & Error Propagation")
 #st.markdown("#### Developed by: **Avalos Carrión** | 2026")
 #st.divider()
@@ -167,4 +167,4 @@ st.sidebar.divider()
 st.sidebar.markdown(f"**Developer:** Juan Avalos Carrión")
 st.sidebar.markdown(f"Numerical Modeling & Data Science Specialist")
 st.sidebar.markdown(f"www.linkedin.com/in/juan-a-c-02a51420b")
-st.sidebar.caption("2026. Physics Simulation Framework v1.0")
+st.sidebar.caption(" 2026. Physics Simulation Framework v1.0")
