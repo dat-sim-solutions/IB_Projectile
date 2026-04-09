@@ -93,14 +93,9 @@ ax1.plot(data["t"], data["v_num"], 'g--', label='Numerical (Euler)')
 ax1.scatter(data["t"], data["v_noisy"], color='red', s=8, alpha=0.5, label='Sensor Data')
 ax1.set_ylabel("Velocity (m/s)"); ax1.legend(loc='lower right'); ax1.grid(True, alpha=0.3)
 ax1.set_xlim(time_range)
-if auto_scale:
-    # 1. Create a mask to find data within the time_range
-    mask = (data["t"] >= time_range[0]) & (data["t"] <= time_range[1])
+
     
-    # 2. Zoom AX1 (Velocity)
-    v_visible = data["v_noisy"][mask]
-    if len(v_visible) > 0:
-        ax1.set_ylim(np.min(v_visible) - 0.5, np.max(v_visible) + 0.5)
+
 
 # Acceleration
 ax2.fill_between(data["t"], data["a_ana"] - data["a_uncert_abs"], data["a_ana"] + data["a_uncert_abs"], color='blue', alpha=0.15)
@@ -117,6 +112,15 @@ ax3.plot(data["t"], data["y_num"], 'g--')
 ax3.scatter(data["t"], data["y_noisy"], color='red', s=8, alpha=0.5)
 ax3.set_ylabel("Position (m)"); ax3.set_xlabel("Time (s)"); ax3.grid(True, alpha=0.3)
 ax3.set_xlim(time_range)
+
+if auto_scale:
+    # 1. Create a mask to find data within the time_range
+    mask = (data["t"] >= time_range[0]) & (data["t"] <= time_range[1])
+    
+    # 2. Zoom AX1 (Velocity)
+    v_visible = data["v_noisy"][mask]
+    if len(v_visible) > 0:
+        ax1.set_ylim(np.min(v_visible) - 0.5, np.max(v_visible) + 0.5)
 
 st.pyplot(fig1)
 
