@@ -55,12 +55,14 @@ d_d = st.sidebar.number_input(
 u_y = st.sidebar.slider("Pos. Sensor Δy (m)", 0.05, 1.0, 0.40)
 u_v = st.sidebar.slider("Vel. Sensor Δv (m/s)", 0.1, 2.0, 0.60)
 
+t_max_limit = 10.0  # Define this globally so the slider can see it
+
 st.sidebar.divider()
 st.sidebar.header("🔍 Plot View Controls")
 # This creates a double-ended slider for the time range
 time_range = st.sidebar.slider(
     "Select Time Zoom (s)", 
-    0.0, float(t_max), (0.0, float(t_max)), 
+    0.0, t_max_limit, (0.0, t_max_limit), 
     step=0.1
 )
 
@@ -72,7 +74,8 @@ data = run_physics_simulation(
     delta_m=d_m, 
     delta_d=d_d, 
     y_uncert_abs=u_y, 
-    v_uncert_abs=u_v
+    v_uncert_abs=u_v,
+    t_max=t_max_limit
 )
 
 # --- SECTION 1: MOTION PROFILES ---
