@@ -99,6 +99,7 @@ ax2.plot(data["t"], data["a_ana"], 'k')
 ax2.plot(data["t"], data["a_num"], 'g--')
 ax2.scatter(data["t"], data["a_noisy"], color='red', s=8, alpha=0.5)
 ax2.set_ylabel("Acceleration (m/s^2)"); ax2.grid(True, alpha=0.3)
+ax2.set_xlim(time_range)
 
 # Position
 ax3.fill_between(data["t"], data["y_ana"] - data["y_uncert_abs"], data["y_ana"] + data["y_uncert_abs"], color='blue', alpha=0.15)
@@ -106,6 +107,7 @@ ax3.plot(data["t"], data["y_ana"], 'k')
 ax3.plot(data["t"], data["y_num"], 'g--')
 ax3.scatter(data["t"], data["y_noisy"], color='red', s=8, alpha=0.5)
 ax3.set_ylabel("Position (m)"); ax3.set_xlabel("Time (s)"); ax3.grid(True, alpha=0.3)
+ax3.set_xlim(time_range)
 
 st.pyplot(fig1)
 
@@ -121,6 +123,7 @@ ax_res.fill_between(data["t"], -data["v_t_theory_err"], data["v_t_theory_err"], 
 ax_res.fill_between(data["t"], -data["v_uncert_abs"], data["v_uncert_abs"], color='gray', alpha=0.2, label='Sensor Limit')
 ax_res.scatter(data["t"], res, color='red', s=8, alpha=0.4)
 ax_res.set_ylabel("Error (m/s)"); ax_res.set_title("Residuals vs. Time")
+ax_res.set_xlim(time_range)
 
 # Box Plot
 ax_box.boxplot(res, vert=True, patch_artist=True, boxprops=dict(facecolor='tomato', alpha=0.4))
