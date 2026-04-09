@@ -65,6 +65,7 @@ time_range = st.sidebar.slider(
     0.0, t_max_limit, (0.0, t_max_limit), 
     step=0.1
 )
+auto_scale = st.sidebar.checkbox("Auto-scale Y-axis on Zoom", value=False)
 
 
 # --- RUN SIMULATION ---
