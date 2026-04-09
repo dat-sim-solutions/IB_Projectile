@@ -165,5 +165,6 @@ st.sidebar.markdown(f"**Stability (CFL):** :{status_color}[{data['cfl_limit']:.4
 # --- FOOTER / DEVELOPER INFO ---
 st.sidebar.divider()
 st.sidebar.markdown(f"**Developer:** Juan Avalos Carrión")
-st.sidebar.markdown(f"**2026**")
-st.sidebar.caption("Physics Simulation Framework v1.0")
+st.sidebar.markdown(f"Numerical Modeling & Data Science Specialist")
+st.sidebar.markdown(f"www.linkedin.com/in/juan-a-c-02a51420b")
+st.sidebar.caption("2026. Physics Simulation Framework v1.0")
