@@ -92,7 +92,7 @@ ax1.plot(data["t"], data["v_ana"], 'k', label='Theory (Analytical)')
 ax1.plot(data["t"], data["v_num"], 'g--', label='Numerical (Euler)')
 ax1.scatter(data["t"], data["v_noisy"], color='red', s=8, alpha=0.5, label='Sensor Data')
 ax1.set_ylabel("Velocity (m/s)"); ax1.legend(loc='lower right'); ax1.grid(True, alpha=0.3)
-ax1.set_xlim(time_range)
+# ax1.set_xlim(time_range)
 
 # Acceleration
 ax2.fill_between(data["t"], data["a_ana"] - data["a_uncert_abs"], data["a_ana"] + data["a_uncert_abs"], color='blue', alpha=0.15)
@@ -100,7 +100,7 @@ ax2.plot(data["t"], data["a_ana"], 'k')
 ax2.plot(data["t"], data["a_num"], 'g--')
 ax2.scatter(data["t"], data["a_noisy"], color='red', s=8, alpha=0.5)
 ax2.set_ylabel("Acceleration (m/s^2)"); ax2.grid(True, alpha=0.3)
-ax2.set_xlim(time_range)
+# ax2.set_xlim(time_range)
 
 # Position
 ax3.fill_between(data["t"], data["y_ana"] - data["y_uncert_abs"], data["y_ana"] + data["y_uncert_abs"], color='blue', alpha=0.15)
@@ -108,6 +108,12 @@ ax3.plot(data["t"], data["y_ana"], 'k')
 ax3.plot(data["t"], data["y_num"], 'g--')
 ax3.scatter(data["t"], data["y_noisy"], color='red', s=8, alpha=0.5)
 ax3.set_ylabel("Position (m)"); ax3.set_xlabel("Time (s)"); ax3.grid(True, alpha=0.3)
+# ax3.set_xlim(time_range)
+
+# --- APPLY GLOBAL VIEW SETTINGS (The "Camera" Work) ---
+# Apply the X-axis zoom to all
+ax1.set_xlim(time_range)
+ax2.set_xlim(time_range)
 ax3.set_xlim(time_range)
 
 if auto_scale:
