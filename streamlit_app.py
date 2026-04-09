@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import norm
 from app.models import run_physics_simulation
+import streamlit.components.v1 as components
 
 st.set_page_config(page_title="Physics Uncertainty Lab", layout="wide") 
 st.title("🪂 Advanced Projectile Lab: Fluid Dynamics & Error Propagation")
