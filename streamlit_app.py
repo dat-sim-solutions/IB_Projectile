@@ -263,7 +263,7 @@ def render_3d_simulation(data):
                 scene.add(sphere);
 
                 // --- 4. GHOSTS WITH DATA LABELS ---
-                const ghostMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, transparent: true, opacity: 0.5 }});
+                const ghostMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, transparent: true, opacity: 0.7 }});
                 const segments = 5;
                 for (let i = 1; i < segments; i++) {{
                     const idx = Math.floor((i / segments) * yData.length);
@@ -283,7 +283,7 @@ def render_3d_simulation(data):
                 // --- LIGHTS & CAMERA ---
                 scene.add(new THREE.AmbientLight(0x404040, 2));
                 const light = new THREE.DirectionalLight(0xffffff, 1);
-                light.position.set(10, 20, 10);
+                light.position.set(10, 20, 8);
                 scene.add(light);
 
                 camera.position.set(60, 20, 60);
