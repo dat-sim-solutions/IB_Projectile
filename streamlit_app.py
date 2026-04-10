@@ -181,6 +181,15 @@ st.pyplot(fig3)
 # ---- 3D -----
 
 def render_3d_simulation(data, rotate_enabled):
+    # 1. Handle the "Memory" of the angle in Python
+    if "camera_angle" not in st.session_state:
+        st.session_state.camera_angle = 0.0
+    
+    # If rotating, we want to increment the angle for the NEXT rerun
+    # (Though JS handles the smooth animation, this keeps Python synced)
+    if rotate_enabled:
+        st.session_state.camera_angle += 0.05
+    
     # Ensure data is clean for JS
     y_vals = [float(y) for y in data["y_ana"]]
     v_vals = [float(v) for v in data["v_ana"]]
@@ -214,8 +223,8 @@ def render_3d_simulation(data, rotate_enabled):
                 const sceneHeight = 300 * scale; 
                 let frame = 0;
                 
-                let angle = 0;
-                const radius = 85; // Distance from the building
+                let angle = {st.session_state.camera_angle};
+                const radius = 80; // Distance from the building
 
                 const scene = new THREE.Scene();
                 scene.background = new THREE.Color(0xf0f2f6);
@@ -292,8 +301,6 @@ def render_3d_simulation(data, rotate_enabled):
                 const light = new THREE.DirectionalLight(0xffffff, 1);
                 light.position.set(10, 20, 10);
                 scene.add(light);
-
-                camera.position.set(radius, 30, 0);
                 
                 function animate() {{
                     requestAnimationFrame(animate);
