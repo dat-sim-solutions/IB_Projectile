@@ -180,7 +180,7 @@ st.pyplot(fig3)
 
 # ---- 3D -----
 
-def render_3d_simulation(data):
+def render_3d_simulation(data, rotate_enabled):
     # Ensure data is clean for JS
     y_vals = [float(y) for y in data["y_ana"]]
     v_vals = [float(v) for v in data["v_ana"]]
