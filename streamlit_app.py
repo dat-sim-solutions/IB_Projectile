@@ -263,9 +263,9 @@ def render_3d_simulation(data):
                     
                     const pMaterial = new THREE.PointsMaterial({{
                         color: 0xffffff,
-                        size: 0.5,
+                        size: 0.4,
                         transparent: true,
-                        opacity: 0.8
+                        opacity: 0.6
                     }});
                     
                     const particleSystem = new THREE.Points(particlesGeo, pMaterial);
@@ -370,7 +370,7 @@ def render_3d_simulation(data):
                         scene.add(ghost);
 
                         const info = "t:" + tData[idx].toFixed(1) + "s; v:" + vData[idx].toFixed(1)+ " m/s";
-                        const label = createText(info, "#ff4b4b");
+                        const label = createText(info, "#ff3333");
                         label.position.set(-12, yPos, 0);
                         scene.add(label);
                     }}
