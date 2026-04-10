@@ -181,8 +181,6 @@ st.pyplot(fig3)
 # ---- 3D -----
 
 def render_3d_simulation(y_positions):
-    # FIX: Convert NumPy array to a clean list of standard floats
-    # This removes any "np.float64" references that break JavaScript
     y_data_list = [float(y) for y in y_positions]
     y_data_js = json.dumps(y_data_list)
     
@@ -201,7 +199,7 @@ def render_3d_simulation(y_positions):
             try {{
                 const yData = {y_data_js};
                 const scale = 0.1; 
-                const sceneHeight = 300 * scale; 
+                const sceneHeight = 300 * scale; // 30 units
                 let frame = 0;
 
                 const scene = new THREE.Scene();
@@ -212,49 +210,42 @@ def render_3d_simulation(y_positions):
                 renderer.setSize(window.innerWidth, 500);
                 document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-                // Building
+                // --- 1. BUILDING ---
                 const bldGeo = new THREE.BoxGeometry(6, sceneHeight, 6);
-                const bldMat = new THREE.MeshPhongMaterial({{ color: 0x1c2b42, transparent: true, opacity: 0.3 }});
+                const bldMat = new THREE.MeshPhongMaterial({{ color: 0x1c2b42, transparent: true, opacity: 0.1 }});
                 const building = new THREE.Mesh(bldGeo, bldMat);
                 building.position.y = sceneHeight / 2;
                 scene.add(building);
 
-                // Sphere
+                // --- 2. MAIN FALLING SPHERE ---
                 const sphGeo = new THREE.SphereGeometry(1.2, 32, 32);
                 const sphMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b }});
                 const sphere = new THREE.Mesh(sphGeo, sphMat);
                 scene.add(sphere);
 
-                // --- GHOST SPHERES (The Stroboscopic Effect) ---
-                const ghostMat = new THREE.MeshPhongMaterial({{ 
-                    color: 0xff4b4b, 
-                    transparent: true, 
-                    opacity: 0.25 
-                }});
-
-                // Logic: We want a ghost every 2 seconds. 
-                // Since total simulation is 10s, that is 1/5th of the total length.
-                const totalFrames = yData.length;
-                const step = Math.floor(totalFrames / 5); 
-
-                for (let i = step; i < totalFrames; i += step) {{
+                // --- 3. GHOST TRAIL (STROBOSCOPIC) ---
+                const ghostMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, transparent: true, opacity: 0.3 }});
+                
+                // We calculate exactly which frames represent 2s, 4s, 6s, 8s
+                // Assuming 10s simulation, we divide the data length into 5 segments
+                const segments = 5;
+                for (let i = 1; i < segments; i++) {{
+                    const index = Math.floor((i / segments) * yData.length);
                     const ghost = new THREE.Mesh(sphGeo, ghostMat);
-                    // Use the exact position at that time interval
-                    ghost.position.y = sceneHeight - (yData[i] * scale);
+                    
+                    // Position ghost: slightly offset to the left (-5) to see the trail clearly
+                    ghost.position.set(-5, sceneHeight - (yData[index] * scale), 0);
                     scene.add(ghost);
                 }}
 
-                // Visual Aid: Grid
-                const grid = new THREE.GridHelper(100, 20);
-                scene.add(grid);
-
-                // Lights
+                // --- 4. EXTRAS ---
+                scene.add(new THREE.GridHelper(100, 20));
                 const light = new THREE.PointLight(0xffffff, 1, 100);
-                light.position.set(10, 40, 20);
+                light.position.set(20, 40, 30);
                 scene.add(light);
                 scene.add(new THREE.AmbientLight(0x404040, 2));
 
-                camera.position.set(40, 20, 60);
+                camera.position.set(60, 20, 60);
                 camera.lookAt(0, 15, 0);
 
                 function animate() {{
@@ -269,13 +260,13 @@ def render_3d_simulation(y_positions):
                 }}
                 animate();
             }} catch (e) {{
-                document.getElementById('canvas-container').innerHTML = "<p style='color:red; padding:20px;'>Error: " + e.message + "</p>";
+                document.getElementById('canvas-container').innerHTML = "<p style='color:red;'>Error: " + e.message + "</p>";
             }}
         </script>
     </body>
     </html>
     """
-    components.html(html_code, height=520) 
+    components.html(html_code, height=520)
 
 st.divider()
 st.subheader("4. 3D Digital Twin: Real-Time Visualization")
