@@ -231,7 +231,7 @@ def render_3d_simulation(data):
                     const sceneHeight = 300 * scale; 
                     let frame = 0;
                     let angle = 0;
-                    const radius = 85; 
+                    const radius = 70; 
                     let isRotating = true;
 
                     // --- SCENE SETUP ---
@@ -283,7 +283,7 @@ def render_3d_simulation(data):
 
                     // --- 2. BUILDING ---
                     const bldMat = new THREE.MeshPhongMaterial({{ 
-                        color: 0x1c2b42, transparent: true, opacity: 0.2, shininess: 50 
+                        color: 0x1c2b42, transparent: true, opacity: 0.3, shininess: 50 
                     }});
                     const building = new THREE.Mesh(new THREE.BoxGeometry(6, sceneHeight, 6), bldMat);
                     building.position.y = sceneHeight / 2;
@@ -297,7 +297,7 @@ def render_3d_simulation(data):
                     scene.add(sphere);
 
                     // --- 4. GHOSTS ---
-                    const ghostMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, transparent: true, opacity: 0.4 }});
+                    const ghostMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, transparent: true, opacity: 0.5 }});
                     const segments = 5;
                     for (let i = 1; i < segments; i++) {{
                         const idx = Math.floor((i / segments) * yData.length);
