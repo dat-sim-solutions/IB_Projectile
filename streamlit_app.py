@@ -4,6 +4,7 @@ import numpy as np
 from scipy.stats import norm
 from app.models import run_physics_simulation
 import streamlit.components.v1 as components
+import json
 
 st.set_page_config(page_title="Physics Uncertainty Lab", layout="wide") 
 st.title("🪂 Advanced Projectile Lab: Fluid Dynamics & Error Propagation")
@@ -180,17 +181,18 @@ st.pyplot(fig3)
 # ---- 3D -----
 
 def render_3d_simulation(y_positions):
-    # Convert Python list to a clean JavaScript array string
-    # We slice it to ensure it's not too long for the HTML component string limit
-    y_data_js = str(list(y_positions))
+    # FIX: Convert NumPy array to a clean list of standard floats
+    # This removes any "np.float64" references that break JavaScript
+    y_data_list = [float(y) for y in y_positions]
+    y_data_js = json.dumps(y_data_list)
     
     html_code = f"""
     <html>
     <head>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
         <style>
-            body {{ margin: 0; background-color: #f0f2f6; }}
-            #canvas-container {{ width: 100vw; height: 500px; }}
+            body {{ margin: 0; background-color: #f0f2f6; overflow: hidden; }}
+            #canvas-container {{ width: 100%; height: 500px; }}
         </style>
     </head>
     <body>
@@ -202,7 +204,6 @@ def render_3d_simulation(y_positions):
                 const sceneHeight = 300 * scale; 
                 let frame = 0;
 
-                // 1. Setup
                 const scene = new THREE.Scene();
                 scene.background = new THREE.Color(0xf0f2f6);
 
@@ -211,22 +212,24 @@ def render_3d_simulation(y_positions):
                 renderer.setSize(window.innerWidth, 500);
                 document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-                // 2. Objects
+                // Building
                 const bldGeo = new THREE.BoxGeometry(6, sceneHeight, 6);
                 const bldMat = new THREE.MeshPhongMaterial({{ color: 0x1c2b42, transparent: true, opacity: 0.3 }});
                 const building = new THREE.Mesh(bldGeo, bldMat);
                 building.position.y = sceneHeight / 2;
                 scene.add(building);
 
+                // Sphere
                 const sphGeo = new THREE.SphereGeometry(1.2, 32, 32);
                 const sphMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b }});
                 const sphere = new THREE.Mesh(sphGeo, sphMat);
                 scene.add(sphere);
 
+                // Visual Aid: Grid
                 const grid = new THREE.GridHelper(100, 20);
                 scene.add(grid);
 
-                // 3. Lights
+                // Lights
                 const light = new THREE.PointLight(0xffffff, 1, 100);
                 light.position.set(10, 40, 20);
                 scene.add(light);
@@ -235,7 +238,6 @@ def render_3d_simulation(y_positions):
                 camera.position.set(40, 20, 60);
                 camera.lookAt(0, 15, 0);
 
-                // 4. Animation
                 function animate() {{
                     requestAnimationFrame(animate);
                     if (frame < yData.length) {{
@@ -248,13 +250,13 @@ def render_3d_simulation(y_positions):
                 }}
                 animate();
             }} catch (e) {{
-                document.getElementById('canvas-container').innerHTML = "<p style='color:red;'>Error loading 3D: " + e.message + "</p>";
+                document.getElementById('canvas-container').innerHTML = "<p style='color:red; padding:20px;'>Error: " + e.message + "</p>";
             }}
         </script>
     </body>
     </html>
     """
-    components.html(html_code, height=520)   
+    components.html(html_code, height=520) 
 
 st.divider()
 st.subheader("4. 3D Digital Twin: Real-Time Visualization")
