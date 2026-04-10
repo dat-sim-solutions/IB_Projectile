@@ -230,7 +230,7 @@ def render_3d_simulation(data):
                     const spriteMat = new THREE.SpriteMaterial({{ map: texture }});
                     const sprite = new THREE.Sprite(spriteMat);
                     // sprite.scale.set(Width, Height, Depth)
-                    sprite.scale.set(15, 2.5, 1);
+                    sprite.scale.set(15, 5, 2);
                     return sprite;
                 }}
 
