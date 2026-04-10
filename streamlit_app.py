@@ -212,7 +212,7 @@ def render_3d_simulation(data):
         </style>
     </head>
     <body>
-        <div id="ui-hint">🖱️ Click 3D view to change from the Reference Frame from Rotating to Stationary.</div>
+        <div id="ui-hint">🖱️ Click 3D view to change the Reference Frame from Rotating to Stationary.</div>
         <div id="canvas-container"></div>
         
         <script>
@@ -248,6 +248,27 @@ def render_3d_simulation(data):
                     container.addEventListener('click', () => {{
                         isRotating = !isRotating;
                     }});
+                    
+                    // --- NEW: PROCEDURAL MOUNTAINS ---
+                    const mtnGeo = new THREE.PlaneGeometry(400, 400, 50, 50);
+                    const verts = mtnGeo.attributes.position.array;
+                    
+                    for (let i = 0; i < verts.length; i += 3) {{
+                        const x = verts[i];
+                        const y = verts[i+1];
+                        // Using Sine sums to simulate Perlin Noise topography
+                        const d = Math.sqrt(x*x + y*y);
+                        if (d > 50) {{ // Only raise mountains far away from the building
+                            verts[i+2] = (Math.sin(x * 0.1) * Math.cos(y * 0.1) * 10) + 
+                                         (Math.sin(x * 0.05) * 5);
+                        }}
+                    }}
+                    mtnGeo.computeVertexNormals();
+                    const mtnMat = new THREE.MeshPhongMaterial({{ color: 0x3d4a35, flatShading: true }});
+                    const mountains = new THREE.Mesh(mtnGeo, mtnMat);
+                    mountains.rotation.x = -Math.PI / 2; // Lay flat
+                    mountains.position.y = -0.5; // Slightly below grid
+                    scene.add(mountains);
                     
                     // --- NEW: TREE CONSTRUCTOR ---
                     function addTree(x, z) {{
