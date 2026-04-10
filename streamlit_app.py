@@ -212,7 +212,7 @@ def render_3d_simulation(data):
         </style>
     </head>
     <body>
-        <div id="ui-hint">🖱️ Click 3D view to Pause/Resume rotation</div>
+        <div id="ui-hint">🖱️ Click 3D view to change from the Reference Frame from Rotating to Stationary.</div>
         <div id="canvas-container"></div>
         
         <script>
@@ -248,6 +248,26 @@ def render_3d_simulation(data):
                     container.addEventListener('click', () => {{
                         isRotating = !isRotating;
                     }});
+                    
+                    // --- NEW: TREE CONSTRUCTOR ---
+                    function addTree(x, z) {{
+                        const trunkGeo = new THREE.CylinderGeometry(0.5, 0.7, 4, 8);
+                        const trunkMat = new THREE.MeshPhongMaterial({{ color: 0x5D4037 }});
+                        const trunk = new THREE.Mesh(trunkGeo, trunkMat);
+                        trunk.position.set(x, 2, z);
+                        scene.add(trunk);
+
+                        const leavesGeo = new THREE.ConeGeometry(3, 6, 8);
+                        const leavesMat = new THREE.MeshPhongMaterial({{ color: 0x2E7D32 }});
+                        const leaves = new THREE.Mesh(leavesGeo, leavesMat);
+                        leaves.position.set(x, 6, z);
+                        scene.add(leaves);
+                    }}
+
+                    // Place a few trees around the building
+                    addTree(15, 15);
+                    addTree(-20, 10);
+                    addTree(10, -25);
 
                     // --- HELPER: TEXT SPRITE ---
                     function createText(text, color="black") {{
