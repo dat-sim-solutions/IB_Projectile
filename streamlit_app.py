@@ -7,7 +7,7 @@ import streamlit.components.v1 as components
 import json
 
 st.set_page_config(page_title="Physics Uncertainty Lab", layout="wide") 
-st.title("🪂 Advanced Projectile Lab: Fluid Dynamics & Error Propagation")
+st.title("🪂 Advanced Projectile 3D Lab: Fluid Dynamics & Error Propagation")
 #st.markdown("#### Developed by: **Avalos Carrión** | 2026")
 #st.divider()
 # --- THEORY SECTION ---
