@@ -193,156 +193,159 @@ def render_3d_simulation(data):
     html_code = f"""
     <html>
     <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
         <style>
             body {{ margin: 0; background-color: #f0f2f6; overflow: hidden; font-family: sans-serif; }}
             #canvas-container {{ 
                 width: 100vw; 
                 height: 500px; 
                 cursor: pointer; 
-                background-color: #cccccc; /* Visual placeholder */
             }}
             #ui-hint {{ 
                 position: absolute; top: 10px; left: 10px; 
-                background: rgba(255,255,255,0.7); padding: 5px 10px; 
+                background: rgba(255,255,255,0.8); padding: 8px 12px; 
                 border-radius: 8px; font-size: 13px; font-weight: bold;
                 pointer-events: none; z-index: 100;
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                color: #1c2b42;
             }}
         </style>
     </head>
     <body>
-        <div id="ui-hint">Click anywhere in the 3D view to Play/Pause rotation</div>
+        <div id="ui-hint">🖱️ Click 3D view to Pause/Resume rotation</div>
         <div id="canvas-container"></div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        
         <script>
-            try {{
-                if (typeof THREE === 'undefined') {{
-                    document.getElementById('canvas-container').innerHTML = "<p style='padding:20px; color:red;'>Error: Three.js library not loaded. Check your internet connection.</p>";
-                    return;
-                }}
-                const yData = {y_data_js};
-                const vData = {v_data_js};
-                const tData = {t_data_js};
-                const scale = 0.1; 
-                const sceneHeight = 300 * scale; 
-                let frame = 0;
-                let angle = 0;
-                const radius = 80; // Distance from the building
-                let isRotating = true; // Internal state
-
-                const scene = new THREE.Scene();
-                scene.background = new THREE.Color(0xf0f2f6);
-
-                const camera = new THREE.PerspectiveCamera(60, window.innerWidth / 500, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({{ antialias: true }});
-                renderer.setSize(window.innerWidth, 500);
-                const container = document.getElementById('canvas-container');
-                container.innerHTML = ""; // Clear placeholder
-                container.appendChild(renderer.domElement);
-                
-                // --- INTERACTION: CLICK TO TOGGLE ---
-                container.addEventListener('mousedown', (e) => {{
-                    isRotating = !isRotating;
-                }});
-
-                // --- HELPER: TEXT SPRITE ---
-                function createText(text, color="black") {{
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = 256; canvas.height = 64;
-                    ctx.fillStyle = color;
-                    ctx.font = 'Bold 44px Arial';
-                    ctx.fillText(text, 0, 45);
-                    const texture = new THREE.CanvasTexture(canvas);
-                    const spriteMat = new THREE.SpriteMaterial({{ map: texture }});
-                    const sprite = new THREE.Sprite(spriteMat);
-                    // sprite.scale.set(Width, Height, Depth)
-                    sprite.scale.set(15, 5, 2);
-                    return sprite;
-                }}
-
-                // --- 1. THE GRID (The 3D Floor) ---
-                const grid = new THREE.GridHelper(200, 20, 0x888888, 0xcccccc);
-                scene.add(grid);
-
-                // --- 1. THE RULER (Every 50m) ---
-                for (let m = 0; m <= 300; m += 50) {{
-                    const yPos = sceneHeight - (m * scale);
-                    // Line
-                    const lineGeo = new THREE.BoxGeometry(10, 0.1, 0.1);
-                    const line = new THREE.Mesh(lineGeo, new THREE.MeshBasicMaterial({{color: 0x999999}}));
-                    line.position.set(5, yPos, 0);
-                    scene.add(line);
-                    // Label
-                    const label = createText(m + "m", "#555555");
-                    label.position.set(12, yPos, 0);
-                    scene.add(label);
-                }}
-
-                // --- 2. BUILDING ---
-                const bldMat = new THREE.MeshPhongMaterial({{ color: 0x1c2b42, transparent: true, opacity: 0.5, shininess: 100 }});
-                const building = new THREE.Mesh(new THREE.BoxGeometry(6, sceneHeight, 6), bldMat);
-                building.position.y = sceneHeight / 2;
-                scene.add(building);
-
-                // --- 3. MAIN SPHERE ---
-                const sphere = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), new THREE.MeshPhongMaterial({{ color: 0xff4b4b, shininess: 100 }}));
-                scene.add(sphere);
-
-                // --- 4. GHOSTS WITH DATA LABELS ---
-                const ghostMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, transparent: true, opacity: 0.7 }});
-                const segments = 5;
-                for (let i = 1; i < segments; i++) {{
-                    const idx = Math.floor((i / segments) * yData.length);
-                    // Ghost
-                    const ghost = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), ghostMat);
-                    const yPos = sceneHeight - (yData[idx] * scale);
-                    ghost.position.set(-5, yPos, 0);
-                    scene.add(ghost);
-
-                    // Label: "t=2s, v=15m/s"
-                    const info = "t:" + tData[idx].toFixed(1) + "s v:" + vData[idx].toFixed(1);
-                    const label = createText(info, "#ff4b4b");
-                    label.position.set(-18, yPos, 0);
-                    scene.add(label);
-                }}
-
-                // --- LIGHTS & CAMERA ---
-                scene.add(new THREE.AmbientLight(0x404040, 2));
-                const light = new THREE.DirectionalLight(0xffffff, 1);
-                light.position.set(10, 20, 10);
-                scene.add(light);
-                
-                function animate() {{
-                    requestAnimationFrame(animate);
-                    
-                    // Camera Logic
-                    if (isRotating) {{
-                        angle += 0.005;  // Change this number to adjust speed (0.005 is slow and smooth)
+            // Wrap in an IIFE to avoid global scope issues
+            (function() {{
+                try {{
+                    if (typeof THREE === 'undefined') {{
+                        document.getElementById('canvas-container').innerHTML = "<p style='padding:20px; color:red;'>Error: Three.js library not loaded.</p>";
+                        return;
                     }}
-                    camera.position.x = Math.cos(angle) * radius;
-                    camera.position.z = Math.sin(angle) * radius;
-                    camera.position.y = 30;
-                    camera.lookAt(0, 15, 0);
-                            
-                    // Physics Logic
-                    if (frame < yData.length) {{
-                        sphere.position.y = sceneHeight - (yData[frame] * scale);
-                        frame++;
-                    }} else {{ frame = 0; }}
-                    renderer.render(scene, camera);
+
+                    const yData = {y_data_js};
+                    const vData = {v_data_js};
+                    const tData = {t_data_js};
+                    const scale = 0.1; 
+                    const sceneHeight = 300 * scale; 
+                    let frame = 0;
+                    let angle = 0;
+                    const radius = 85; 
+                    let isRotating = true;
+
+                    // --- SCENE SETUP ---
+                    const scene = new THREE.Scene();
+                    scene.background = new THREE.Color(0xf0f2f6);
+
+                    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / 500, 0.1, 1000);
+                    const renderer = new THREE.WebGLRenderer({{ antialias: true }});
+                    renderer.setSize(window.innerWidth, 500);
+                    const container = document.getElementById('canvas-container');
+                    container.appendChild(renderer.domElement);
+                    
+                    // --- CLICK TOGGLE ---
+                    container.addEventListener('click', () => {{
+                        isRotating = !isRotating;
+                    }});
+
+                    // --- HELPER: TEXT SPRITE ---
+                    function createText(text, color="black") {{
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = 512; canvas.height = 128; // Higher resolution
+                        ctx.fillStyle = color;
+                        ctx.font = 'Bold 60px Arial';
+                        ctx.fillText(text, 10, 80);
+                        const texture = new THREE.CanvasTexture(canvas);
+                        const spriteMat = new THREE.SpriteMaterial({{ map: texture }});
+                        const sprite = new THREE.Sprite(spriteMat);
+                        sprite.scale.set(15, 4, 1);
+                        return sprite;
+                    }}
+
+                    // --- 1. FLOOR & RULER ---
+                    scene.add(new THREE.GridHelper(200, 20, 0x888888, 0xcccccc));
+
+                    for (let m = 0; m <= 300; m += 50) {{
+                        const yPos = sceneHeight - (m * scale);
+                        const line = new THREE.Mesh(
+                            new THREE.BoxGeometry(12, 0.1, 0.1), 
+                            new THREE.MeshBasicMaterial({{color: 0x999999}})
+                        );
+                        line.position.set(6, yPos, 0);
+                        scene.add(line);
+
+                        const label = createText(m + "m", "#555555");
+                        label.position.set(18, yPos, 0);
+                        scene.add(label);
+                    }}
+
+                    // --- 2. BUILDING ---
+                    const bldMat = new THREE.MeshPhongMaterial({{ 
+                        color: 0x1c2b42, transparent: true, opacity: 0.2, shininess: 50 
+                    }});
+                    const building = new THREE.Mesh(new THREE.BoxGeometry(6, sceneHeight, 6), bldMat);
+                    building.position.y = sceneHeight / 2;
+                    scene.add(building);
+
+                    // --- 3. MAIN SPHERE ---
+                    const sphere = new THREE.Mesh(
+                        new THREE.SphereGeometry(1.2, 32, 32), 
+                        new THREE.MeshPhongMaterial({{ color: 0xff4b4b, shininess: 100 }})
+                    );
+                    scene.add(sphere);
+
+                    // --- 4. GHOSTS ---
+                    const ghostMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, transparent: true, opacity: 0.4 }});
+                    const segments = 5;
+                    for (let i = 1; i < segments; i++) {{
+                        const idx = Math.floor((i / segments) * yData.length);
+                        const yPos = sceneHeight - (yData[idx] * scale);
+                        const ghost = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), ghostMat);
+                        ghost.position.set(-6, yPos, 0);
+                        scene.add(ghost);
+
+                        const info = "t:" + tData[idx].toFixed(1) + "s v:" + vData[idx].toFixed(1);
+                        const label = createText(info, "#ff4b4b");
+                        label.position.set(-22, yPos, 0);
+                        scene.add(label);
+                    }}
+
+                    // --- LIGHTS ---
+                    scene.add(new THREE.AmbientLight(0x404040, 2));
+                    const light = new THREE.DirectionalLight(0xffffff, 1);
+                    light.position.set(10, 50, 10);
+                    scene.add(light);
+                    
+                    function animate() {{
+                        requestAnimationFrame(animate);
+                        
+                        if (isRotating) {{
+                            angle += 0.005; 
+                        }}
+                        camera.position.x = Math.cos(angle) * radius;
+                        camera.position.z = Math.sin(angle) * radius;
+                        camera.position.y = 30;
+                        camera.lookAt(0, 15, 0);
+                                
+                        if (frame < yData.length) {{
+                            sphere.position.y = sceneHeight - (yData[frame] * scale);
+                            frame++;
+                        }} else {{ frame = 0; }}
+                        renderer.render(scene, camera);
+                    }}
+                    animate();
+
+                }} catch (err) {{
+                    document.getElementById('canvas-container').innerHTML = "<p style='color:red;'>Script Error: " + err.message + "</p>";
                 }}
-                animate();
-            }} catch (err) {{
-                document.getElementById('canvas-container').innerHTML = "<p style='color:red;'>Script Error: " + err.message + "</p>";
-            }}
-            }};
+            }})();
         </script>
     </body>
     </html>
     """
     components.html(html_code, height=520)
-
 
 st.divider()
 st.subheader("4. 3D Digital Twin: Real-Time Visualization")
