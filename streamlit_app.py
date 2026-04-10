@@ -229,7 +229,7 @@ def render_3d_simulation(y_positions):
                 const ghostMat = new THREE.MeshPhongMaterial({{ 
                     color: 0xff4b4b, 
                     transparent: true, 
-                    opacity: 0.2 
+                    opacity: 0.5 
                 }});
 
                // 2. Add Ghost Spheres every 2 seconds (40 frames if dt=0.05)
