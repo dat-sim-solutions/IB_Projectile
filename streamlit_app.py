@@ -180,9 +180,15 @@ st.pyplot(fig3)
 
 # ---- 3D -----
 
-def render_3d_simulation(y_positions):
-    y_data_list = [float(y) for y in y_positions]
-    y_data_js = json.dumps(y_data_list)
+def render_3d_simulation(data):
+    # Ensure data is clean for JS
+    y_vals = [float(y) for y in data["y_ana"]]
+    v_vals = [float(v) for v in data["v_ana"]]
+    t_vals = [float(t) for t in data["t"]]
+    
+    y_data_js = json.dumps(y_vals)
+    v_data_js = json.dumps(v_vals)
+    t_data_js = json.dumps(t_vals)
     
     html_code = f"""
     <html>
@@ -198,8 +204,10 @@ def render_3d_simulation(y_positions):
         <script>
             try {{
                 const yData = {y_data_js};
+                const vData = {v_data_js};
+                const tData = {t_data_js};
                 const scale = 0.1; 
-                const sceneHeight = 300 * scale; // 30 units
+                const sceneHeight = 300 * scale; 
                 let frame = 0;
 
                 const scene = new THREE.Scene();
@@ -210,40 +218,68 @@ def render_3d_simulation(y_positions):
                 renderer.setSize(window.innerWidth, 500);
                 document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-                // --- 1. BUILDING ---
-                const bldGeo = new THREE.BoxGeometry(6, sceneHeight, 6);
+                // --- HELPER: TEXT SPRITE ---
+                function createText(text, color="black") {{
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = 256; canvas.height = 64;
+                    ctx.fillStyle = color;
+                    ctx.font = 'Bold 40px Arial';
+                    ctx.fillText(text, 0, 40);
+                    const texture = new THREE.CanvasTexture(canvas);
+                    const spriteMat = new THREE.SpriteMaterial({{ map: texture }});
+                    const sprite = new THREE.Sprite(spriteMat);
+                    sprite.scale.set(10, 2.5, 1);
+                    return sprite;
+                }}
+
+                // --- 1. THE RULER (Every 50m) ---
+                for (let m = 0; m <= 300; m += 50) {{
+                    const yPos = sceneHeight - (m * scale);
+                    // Line
+                    const lineGeo = new THREE.BoxGeometry(10, 0.1, 0.1);
+                    const line = new THREE.Mesh(lineGeo, new THREE.MeshBasicMaterial({{color: 0x999999}}));
+                    line.position.set(5, yPos, 0);
+                    scene.add(line);
+                    // Label
+                    const label = createText(m + "m", "#555555");
+                    label.position.set(12, yPos, 0);
+                    scene.add(label);
+                }}
+
+                // --- 2. BUILDING ---
                 const bldMat = new THREE.MeshPhongMaterial({{ color: 0x1c2b42, transparent: true, opacity: 0.1 }});
-                const building = new THREE.Mesh(bldGeo, bldMat);
+                const building = new THREE.Mesh(new THREE.BoxGeometry(6, sceneHeight, 6), bldMat);
                 building.position.y = sceneHeight / 2;
                 scene.add(building);
 
-                // --- 2. MAIN FALLING SPHERE ---
-                const sphGeo = new THREE.SphereGeometry(1.2, 32, 32);
-                const sphMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b }});
-                const sphere = new THREE.Mesh(sphGeo, sphMat);
+                // --- 3. MAIN SPHERE ---
+                const sphere = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), new THREE.MeshPhongMaterial({{ color: 0xff4b4b }}));
                 scene.add(sphere);
 
-                // --- 3. GHOST TRAIL (STROBOSCOPIC) ---
-                const ghostMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, transparent: true, opacity: 0.5 }});
-                
-                // We calculate exactly which frames represent 2s, 4s, 6s, 8s
-                // Assuming 10s simulation, we divide the data length into 5 segments
+                // --- 4. GHOSTS WITH DATA LABELS ---
+                const ghostMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, transparent: true, opacity: 0.3 }});
                 const segments = 5;
                 for (let i = 1; i < segments; i++) {{
-                    const index = Math.floor((i / segments) * yData.length);
-                    const ghost = new THREE.Mesh(sphGeo, ghostMat);
-                    
-                    // Position ghost: slightly offset to the left (-5) to see the trail clearly
-                    ghost.position.set(-5, sceneHeight - (yData[index] * scale), 0);
+                    const idx = Math.floor((i / segments) * yData.length);
+                    // Ghost
+                    const ghost = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), ghostMat);
+                    const yPos = sceneHeight - (yData[idx] * scale);
+                    ghost.position.set(-5, yPos, 0);
                     scene.add(ghost);
+
+                    // Label: "t=2s, v=15m/s"
+                    const info = "t:" + tData[idx].toFixed(1) + "s v:" + vData[idx].toFixed(1);
+                    const label = createText(info, "#ff4b4b");
+                    label.position.set(-15, yPos, 0);
+                    scene.add(label);
                 }}
 
-                // --- 4. EXTRAS ---
-                scene.add(new THREE.GridHelper(100, 20));
-                const light = new THREE.PointLight(0xffffff, 1, 100);
-                light.position.set(20, 40, 30);
-                scene.add(light);
+                // --- LIGHTS & CAMERA ---
                 scene.add(new THREE.AmbientLight(0x404040, 2));
+                const light = new THREE.DirectionalLight(0xffffff, 1);
+                light.position.set(10, 20, 10);
+                scene.add(light);
 
                 camera.position.set(60, 20, 60);
                 camera.lookAt(0, 15, 0);
@@ -253,15 +289,11 @@ def render_3d_simulation(y_positions):
                     if (frame < yData.length) {{
                         sphere.position.y = sceneHeight - (yData[frame] * scale);
                         frame++;
-                    }} else {{
-                        frame = 0;
-                    }}
+                    }} else {{ frame = 0; }}
                     renderer.render(scene, camera);
                 }}
                 animate();
-            }} catch (e) {{
-                document.getElementById('canvas-container').innerHTML = "<p style='color:red;'>Error: " + e.message + "</p>";
-            }}
+            }} catch (e) {{ console.error(e); }}
         </script>
     </body>
     </html>
