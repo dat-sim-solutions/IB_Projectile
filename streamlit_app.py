@@ -178,92 +178,83 @@ ax_zoom.set_xlabel("Time (s)"); ax_zoom.set_ylabel("Velocity (m/s)"); ax_zoom.gr
 st.pyplot(fig3)
 
 # ---- 3D -----
+
 def render_3d_simulation(y_positions):
-    """
-    Renders a 3D building and falling sphere.
-    y_positions: The 'y_ana' array from the simulation data.
-    """
     # Convert Python list to a clean JavaScript array string
+    # We slice it to ensure it's not too long for the HTML component string limit
     y_data_js = str(list(y_positions))
     
-    # We use a 0.1 scale: 300m real-world = 30 units in Three.js
     html_code = f"""
-    <div id="threejs-container" style="width: 100%; height: 500px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        // Data and Scaling
-        const yData = {y_data_js};
-        const scale = 0.1; 
-        const realHeight = 300; // Expected max displacement
-        const sceneHeight = realHeight * scale; 
-        let frame = 0;
+    <html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <style>
+            body {{ margin: 0; background-color: #f0f2f6; }}
+            #canvas-container {{ width: 100vw; height: 500px; }}
+        </style>
+    </head>
+    <body>
+        <div id="canvas-container"></div>
+        <script>
+            try {{
+                const yData = {y_data_js};
+                const scale = 0.1; 
+                const sceneHeight = 300 * scale; 
+                let frame = 0;
 
-        // 1. Scene Setup
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xf0f2f6); // Matches Streamlit light theme
+                // 1. Setup
+                const scene = new THREE.Scene();
+                scene.background = new THREE.Color(0xf0f2f6);
 
-        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / 500, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({{ antialias: true }});
-        renderer.setSize(window.innerWidth, 500);
-        document.getElementById('threejs-container').appendChild(renderer.domElement);
+                const camera = new THREE.PerspectiveCamera(60, window.innerWidth / 500, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({{ antialias: true }});
+                renderer.setSize(window.innerWidth, 500);
+                document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        // 2. Objects
-        // Building (Translucent)
-        const bldGeo = new THREE.BoxGeometry(6, sceneHeight, 6);
-        const bldMat = new THREE.MeshPhongMaterial({{ color: 0x1c2b42, transparent: true, opacity: 0.3 }});
-        const building = new THREE.Mesh(bldGeo, bldMat);
-        building.position.y = sceneHeight / 2; // Base on ground
-        scene.add(building);
+                // 2. Objects
+                const bldGeo = new THREE.BoxGeometry(6, sceneHeight, 6);
+                const bldMat = new THREE.MeshPhongMaterial({{ color: 0x1c2b42, transparent: true, opacity: 0.3 }});
+                const building = new THREE.Mesh(bldGeo, bldMat);
+                building.position.y = sceneHeight / 2;
+                scene.add(building);
 
-        // Falling Sphere
-        const sphGeo = new THREE.SphereGeometry(1.2, 32, 32);
-        const sphMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, emissive: 0x330000 }}); // Streamlit Red
-        const sphere = new THREE.Mesh(sphGeo, sphMat);
-        scene.add(sphere);
+                const sphGeo = new THREE.SphereGeometry(1.2, 32, 32);
+                const sphMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b }});
+                const sphere = new THREE.Mesh(sphGeo, sphMat);
+                scene.add(sphere);
 
-        // Ground Plane
-        const groundGeo = new THREE.PlaneGeometry(100, 100);
-        const groundMat = new THREE.MeshPhongMaterial({{ color: 0xcccccc, side: THREE.DoubleSide }});
-        const ground = new THREE.Mesh(groundGeo, groundMat);
-        ground.rotation.x = Math.PI / 2;
-        scene.add(ground);
+                const grid = new THREE.GridHelper(100, 20);
+                scene.add(grid);
 
-        // 3. Lights
-        const light = new THREE.DirectionalLight(0xffffff, 1);
-        light.position.set(10, 20, 15);
-        scene.add(light);
-        scene.add(new THREE.AmbientLight(0x404040, 2));
+                // 3. Lights
+                const light = new THREE.PointLight(0xffffff, 1, 100);
+                light.position.set(10, 40, 20);
+                scene.add(light);
+                scene.add(new THREE.AmbientLight(0x404040, 2));
 
-        // 4. Camera Positioning (Scale Included)
-        camera.position.set(40, sceneHeight / 1.5, 60); // View from distance
-        camera.lookAt(0, sceneHeight / 2, 0); // Aim at middle of building
+                camera.position.set(40, 20, 60);
+                camera.lookAt(0, 15, 0);
 
-        // 5. Animation Loop
-        function animate() {{
-            requestAnimationFrame(animate);
-            
-            if (frame < yData.length) {{
-                // Current position = Top - (fallen distance * scale)
-                sphere.position.y = sceneHeight - (yData[frame] * scale);
-                frame++;
-            }} else {{
-                frame = 0; // Reset loop
+                // 4. Animation
+                function animate() {{
+                    requestAnimationFrame(animate);
+                    if (frame < yData.length) {{
+                        sphere.position.y = sceneHeight - (yData[frame] * scale);
+                        frame++;
+                    }} else {{
+                        frame = 0;
+                    }}
+                    renderer.render(scene, camera);
+                }}
+                animate();
+            }} catch (e) {{
+                document.getElementById('canvas-container').innerHTML = "<p style='color:red;'>Error loading 3D: " + e.message + "</p>";
             }}
-
-            renderer.render(scene, camera);
-        }}
-
-        // Handle window resize
-        window.addEventListener('resize', () => {{
-            camera.aspect = window.innerWidth / 500;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, 500);
-        }});
-
-        animate();
-    </script>
+        </script>
+    </body>
+    </html>
     """
-    components.html(html_code, height=520)
+    components.html(html_code, height=520)   
 
 st.divider()
 st.subheader("4. 3D Digital Twin: Real-Time Visualization")
