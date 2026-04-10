@@ -166,6 +166,17 @@ ax_vio.set_ylim(ax_res.get_ylim()); ax_vio.set_xticks([1]); ax_vio.set_xticklabe
 
 st.pyplot(fig2)
 
+# --- SECTION 3: MICRO-ANALYSIS WINDOW ---
+st.divider()
+st.subheader("3. Local Interval Inspection (4.0s - 5.0s)")
+mask = (data["t"] >= 4.0) & (data["t"] <= 5.0)
+fig3, ax_zoom = plt.subplots(figsize=(10, 4))
+ax_zoom.plot(data["t"][mask], data["v_ana"][mask], 'k', label='Theory')
+ax_zoom.errorbar(data["t"][mask], data["v_noisy"][mask], xerr=0.05, yerr=data["v_uncert_abs"], 
+                 fmt='o', color='red', ecolor='gray', capsize=3, label='Sensor + Sync Error Boxes')
+ax_zoom.set_xlabel("Time (s)"); ax_zoom.set_ylabel("Velocity (m/s)"); ax_zoom.grid(alpha=0.3); ax_zoom.legend()
+st.pyplot(fig3)
+
 # ---- 3D -----
 def render_3d_simulation(y_positions):
     """
@@ -254,18 +265,12 @@ def render_3d_simulation(y_positions):
     """
     components.html(html_code, height=520)
 
-# --- SECTION 3: MICRO-ANALYSIS WINDOW ---
 st.divider()
-st.subheader("3. Local Interval Inspection (4.0s - 5.0s)")
-mask = (data["t"] >= 4.0) & (data["t"] <= 5.0)
-fig3, ax_zoom = plt.subplots(figsize=(10, 4))
-ax_zoom.plot(data["t"][mask], data["v_ana"][mask], 'k', label='Theory')
-ax_zoom.errorbar(data["t"][mask], data["v_noisy"][mask], xerr=0.05, yerr=data["v_uncert_abs"], 
-                 fmt='o', color='red', ecolor='gray', capsize=3, label='Sensor + Sync Error Boxes')
-ax_zoom.set_xlabel("Time (s)"); ax_zoom.set_ylabel("Velocity (m/s)"); ax_zoom.grid(alpha=0.3); ax_zoom.legend()
-st.pyplot(fig3)
+st.subheader("4. 3D Digital Twin: Real-Time Visualization")
+st.write("Watch the physics in action. The building is scaled to **300m** (approx. 80 stories).")
+render_3d_simulation(data["y_ana"])
 
-# Status Footer
+# Status Footer --------
 status_color = "green" if 0.05 < data['cfl_limit'] else "red"
 st.sidebar.markdown(f"**Stability (CFL):** :{status_color}[{data['cfl_limit']:.4f}s]")
 
