@@ -225,21 +225,24 @@ def render_3d_simulation(y_positions):
                 const sphere = new THREE.Mesh(sphGeo, sphMat);
                 scene.add(sphere);
 
-                // 1. Create the "Ghost" Material (Semi-transparent)
+                // --- GHOST SPHERES (The Stroboscopic Effect) ---
                 const ghostMat = new THREE.MeshPhongMaterial({{ 
                     color: 0xff4b4b, 
                     transparent: true, 
-                    opacity: 0.5 
+                    opacity: 0.25 
                 }});
 
-               // 2. Add Ghost Spheres every 2 seconds (40 frames if dt=0.05)
-               const framesPerGhost = 40; 
-               for (let i = 0; i < yData.length; i += framesPerGhost) {{
-                   if (i === 0) continue; // Skip the very first one to keep it clean
-                   const ghost = new THREE.Mesh(sphGeo, ghostMat);
-                   ghost.position.set(0, sceneHeight - (yData[i] * scale), 0);
-                   scene.add(ghost);
-               }}
+                // Logic: We want a ghost every 2 seconds. 
+                // Since total simulation is 10s, that is 1/5th of the total length.
+                const totalFrames = yData.length;
+                const step = Math.floor(totalFrames / 5); 
+
+                for (let i = step; i < totalFrames; i += step) {{
+                    const ghost = new THREE.Mesh(sphGeo, ghostMat);
+                    // Use the exact position at that time interval
+                    ghost.position.y = sceneHeight - (yData[i] * scale);
+                    scene.add(ghost);
+                }}
 
                 // Visual Aid: Grid
                 const grid = new THREE.GridHelper(100, 20);
