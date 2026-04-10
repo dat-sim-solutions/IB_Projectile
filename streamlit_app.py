@@ -226,20 +226,20 @@ def render_3d_simulation(y_positions):
                 scene.add(sphere);
 
                 // 1. Create the "Ghost" Material (Semi-transparent)
-                const ghostMat = new THREE.MeshPhongMaterial({ 
+                const ghostMat = new THREE.MeshPhongMaterial({{ 
                     color: 0xff4b4b, 
                     transparent: true, 
                     opacity: 0.2 
-                });
+                }});
 
                // 2. Add Ghost Spheres every 2 seconds (40 frames if dt=0.05)
                const framesPerGhost = 40; 
-               for (let i = 0; i < yData.length; i += framesPerGhost) {
+               for (let i = 0; i < yData.length; i += framesPerGhost) {{
                    if (i === 0) continue; // Skip the very first one to keep it clean
                    const ghost = new THREE.Mesh(sphGeo, ghostMat);
                    ghost.position.set(0, sceneHeight - (yData[i] * scale), 0);
                    scene.add(ghost);
-               }
+               }}
 
                 // Visual Aid: Grid
                 const grid = new THREE.GridHelper(100, 20);
