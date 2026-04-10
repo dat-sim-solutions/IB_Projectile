@@ -276,7 +276,7 @@ def render_3d_simulation(data):
                     // Label: "t=2s, v=15m/s"
                     const info = "t:" + tData[idx].toFixed(1) + "s v:" + vData[idx].toFixed(1);
                     const label = createText(info, "#ff4b4b");
-                    label.position.set(-5, yPos, 0);
+                    label.position.set(-18, yPos, 0);
                     scene.add(label);
                 }}
 
