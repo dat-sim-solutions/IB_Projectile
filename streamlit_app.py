@@ -307,7 +307,7 @@ def render_3d_simulation(data, rotate_enabled):
                         camera.position.y = 30;
                     }} else {{
                         // Fixed "Observer" Position
-                        camera.position.set(70, 30, 70);
+                        camera.position.set(80, 30, 70);
                     }}
                     camera.lookAt(0, 15, 0); // Keep pointing at the center of the building
                     
