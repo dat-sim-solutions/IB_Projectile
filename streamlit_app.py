@@ -308,7 +308,7 @@ def render_3d_simulation(data):
 
                         const info = "t:" + tData[idx].toFixed(1) + "s v:" + vData[idx].toFixed(1);
                         const label = createText(info, "#ff4b4b");
-                        label.position.set(-22, yPos, 0);
+                        label.position.set(-12, yPos, 0);
                         scene.add(label);
                     }}
 
