@@ -283,10 +283,10 @@ def render_3d_simulation(data):
                 // --- LIGHTS & CAMERA ---
                 scene.add(new THREE.AmbientLight(0x404040, 2));
                 const light = new THREE.DirectionalLight(0xffffff, 1);
-                light.position.set(10, 20, 8);
+                light.position.set(10, 20, 10);
                 scene.add(light);
 
-                camera.position.set(60, 20, 60);
+                camera.position.set(60, 20, 40);
                 camera.lookAt(0, 15, 0);
 
                 function animate() {{
