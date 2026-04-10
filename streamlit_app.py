@@ -224,7 +224,7 @@ def render_3d_simulation(y_positions):
                 scene.add(sphere);
 
                 // --- 3. GHOST TRAIL (STROBOSCOPIC) ---
-                const ghostMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, transparent: true, opacity: 0.3 }});
+                const ghostMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, transparent: true, opacity: 0.5 }});
                 
                 // We calculate exactly which frames represent 2s, 4s, 6s, 8s
                 // Assuming 10s simulation, we divide the data length into 5 segments
