@@ -308,9 +308,7 @@ def render_3d_simulation(data):
                     }}
 
                     // Place a few trees around the building
-                    addTree(15, 15);
-                    addTree(-20, 10);
-                    addTree(10, -25);
+                    addTree(15, 15); addTree(-20, 10); addTree(10, -25); addTree(10, -18);
 
                     // --- HELPER: TEXT SPRITE ---
                     function createText(text, color="black") {{
@@ -370,7 +368,7 @@ def render_3d_simulation(data):
                         scene.add(ghost);
 
                         const info = "t:" + tData[idx].toFixed(1) + "s; v:" + vData[idx].toFixed(1)+ " m/s";
-                        const label = createText(info, "#ff3333");
+                        const label = createText(info, "#ff1111");
                         label.position.set(-12, yPos, 0);
                         scene.add(label);
                     }}
