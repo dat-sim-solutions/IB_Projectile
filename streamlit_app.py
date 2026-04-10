@@ -193,22 +193,33 @@ def render_3d_simulation(data):
     html_code = f"""
     <html>
     <head>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
         <style>
-            body {{ margin: 0; background-color: #f0f2f6; overflow: hidden; }}
-            #canvas-container {{ width: 100%; height: 500px; }}
+            body {{ margin: 0; background-color: #f0f2f6; overflow: hidden; font-family: sans-serif; }}
+            #canvas-container {{ 
+                width: 100vw; 
+                height: 500px; 
+                cursor: pointer; 
+                background-color: #cccccc; /* Visual placeholder */
+            }}
             #ui-hint {{ 
                 position: absolute; top: 10px; left: 10px; 
                 background: rgba(255,255,255,0.7); padding: 5px 10px; 
-                border-radius: 5px; font-size: 12px; pointer-events: none;
+                border-radius: 8px; font-size: 13px; font-weight: bold;
+                pointer-events: none; z-index: 100;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }}
         </style>
     </head>
     <body>
         <div id="ui-hint">Click anywhere in the 3D view to Play/Pause rotation</div>
         <div id="canvas-container"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
         <script>
             try {{
+                if (typeof THREE === 'undefined') {{
+                    document.getElementById('canvas-container').innerHTML = "<p style='padding:20px; color:red;'>Error: Three.js library not loaded. Check your internet connection.</p>";
+                    return;
+                }}
                 const yData = {y_data_js};
                 const vData = {v_data_js};
                 const tData = {t_data_js};
@@ -225,10 +236,12 @@ def render_3d_simulation(data):
                 const camera = new THREE.PerspectiveCamera(60, window.innerWidth / 500, 0.1, 1000);
                 const renderer = new THREE.WebGLRenderer({{ antialias: true }});
                 renderer.setSize(window.innerWidth, 500);
-                document.getElementById('canvas-container').appendChild(renderer.domElement);
-
+                const container = document.getElementById('canvas-container');
+                container.innerHTML = ""; // Clear placeholder
+                container.appendChild(renderer.domElement);
+                
                 // --- INTERACTION: CLICK TO TOGGLE ---
-                container.addEventListener('click', () => {{
+                container.addEventListener('mousedown', (e) => {{
                     isRotating = !isRotating;
                 }});
 
@@ -320,7 +333,10 @@ def render_3d_simulation(data):
                     renderer.render(scene, camera);
                 }}
                 animate();
-            }} catch (e) {{ console.error(e); }}
+            }} catch (err) {{
+                document.getElementById('canvas-container').innerHTML = "<p style='color:red;'>Script Error: " + err.message + "</p>";
+            }}
+            }};
         </script>
     </body>
     </html>
