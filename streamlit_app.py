@@ -180,16 +180,7 @@ st.pyplot(fig3)
 
 # ---- 3D -----
 
-def render_3d_simulation(data, rotate_enabled):
-    # 1. Handle the "Memory" of the angle in Python
-    if "camera_angle" not in st.session_state:
-        st.session_state.camera_angle = 0.0
-    
-    # If rotating, we want to increment the angle for the NEXT rerun
-    # (Though JS handles the smooth animation, this keeps Python synced)
-    if rotate_enabled:
-        st.session_state.camera_angle += 0.05
-    
+def render_3d_simulation(data):    
     # Ensure data is clean for JS
     y_vals = [float(y) for y in data["y_ana"]]
     v_vals = [float(v) for v in data["v_ana"]]
@@ -199,9 +190,6 @@ def render_3d_simulation(data, rotate_enabled):
     v_data_js = json.dumps(v_vals)
     t_data_js = json.dumps(t_vals)
     
-    # We pass the Python boolean directly into the JS via the f-string
-    rotate_js = "true" if rotate_enabled else "false"
-    
     html_code = f"""
     <html>
     <head>
@@ -209,22 +197,27 @@ def render_3d_simulation(data, rotate_enabled):
         <style>
             body {{ margin: 0; background-color: #f0f2f6; overflow: hidden; }}
             #canvas-container {{ width: 100%; height: 500px; }}
+            #ui-hint {{ 
+                position: absolute; top: 10px; left: 10px; 
+                background: rgba(255,255,255,0.7); padding: 5px 10px; 
+                border-radius: 5px; font-size: 12px; pointer-events: none;
+            }}
         </style>
     </head>
     <body>
+        <div id="ui-hint">Click anywhere in the 3D view to Play/Pause rotation</div>
         <div id="canvas-container"></div>
         <script>
             try {{
                 const yData = {y_data_js};
                 const vData = {v_data_js};
                 const tData = {t_data_js};
-                const shouldRotate = {rotate_js};
                 const scale = 0.1; 
                 const sceneHeight = 300 * scale; 
                 let frame = 0;
-                
-                let angle = {st.session_state.camera_angle};
+                let angle = 0;
                 const radius = 80; // Distance from the building
+                let isRotating = true; // Internal state
 
                 const scene = new THREE.Scene();
                 scene.background = new THREE.Color(0xf0f2f6);
@@ -233,6 +226,11 @@ def render_3d_simulation(data, rotate_enabled):
                 const renderer = new THREE.WebGLRenderer({{ antialias: true }});
                 renderer.setSize(window.innerWidth, 500);
                 document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+                // --- INTERACTION: CLICK TO TOGGLE ---
+                container.addEventListener('click', () => {{
+                    isRotating = !isRotating;
+                }});
 
                 // --- HELPER: TEXT SPRITE ---
                 function createText(text, color="black") {{
@@ -306,7 +304,7 @@ def render_3d_simulation(data, rotate_enabled):
                     requestAnimationFrame(animate);
                     
                     // Camera Logic
-                    if (shouldRotate) {{
+                    if (isRotating) {{
                         angle += 0.005;  // Change this number to adjust speed (0.005 is slow and smooth)
                     }}
                     camera.position.x = Math.cos(angle) * radius;
@@ -329,15 +327,11 @@ def render_3d_simulation(data, rotate_enabled):
     """
     components.html(html_code, height=520)
 
-st.sidebar.divider()
-st.sidebar.header("🕹️ 3D View Settings")
-do_rotate = st.sidebar.checkbox("Auto-Rotate Camera", value=True)
 
 st.divider()
 st.subheader("4. 3D Digital Twin: Real-Time Visualization")
 st.write("Watch the physics in action. The building is scaled to **300m** (approx. 80 stories).")
-# render_3d_simulation(data["y_ana"])
-render_3d_simulation(data, do_rotate)
+render_3d_simulation(data)
 
 # Status Footer --------
 status_color = "green" if 0.05 < data['cfl_limit'] else "red"
