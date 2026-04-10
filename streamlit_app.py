@@ -326,6 +326,10 @@ def render_3d_simulation(data, rotate_enabled):
     """
     components.html(html_code, height=520)
 
+st.sidebar.divider()
+st.sidebar.header("🕹️ 3D View Settings")
+do_rotate = st.sidebar.checkbox("Auto-Rotate Camera", value=True)
+
 st.divider()
 st.subheader("4. 3D Digital Twin: Real-Time Visualization")
 st.write("Watch the physics in action. The building is scaled to **300m** (approx. 80 stories).")
@@ -335,10 +339,6 @@ render_3d_simulation(data, do_rotate)
 # Status Footer --------
 status_color = "green" if 0.05 < data['cfl_limit'] else "red"
 st.sidebar.markdown(f"**Stability (CFL):** :{status_color}[{data['cfl_limit']:.4f}s]")
-
-st.sidebar.divider()
-st.sidebar.header("🕹️ 3D View Settings")
-do_rotate = st.sidebar.checkbox("Auto-Rotate Camera", value=True)
 
 # --- FOOTER / DEVELOPER INFO ---
 st.sidebar.divider()
