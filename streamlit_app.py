@@ -288,9 +288,18 @@ def render_3d_simulation(data):
 
                 camera.position.set(60, 20, 40);
                 camera.lookAt(0, 15, 0);
+                
+                let angle = 0;
+                const radius = 80; // Distance from the building
 
                 function animate() {{
                     requestAnimationFrame(animate);
+                    // --- 1. ROTATION LOGIC ---
+                    angle += 0.005; // Change this number to adjust speed (0.005 is slow and smooth)
+                    camera.position.x = Math.cos(angle) * radius;
+                    camera.position.z = Math.sin(angle) * radius;
+                    camera.lookAt(0, 15, 0); // Keep pointing at the center of the building
+                    
                     if (frame < yData.length) {{
                         sphere.position.y = sceneHeight - (yData[frame] * scale);
                         frame++;
