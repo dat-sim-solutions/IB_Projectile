@@ -249,6 +249,28 @@ def render_3d_simulation(data):
                         isRotating = !isRotating;
                     }});
                     
+                    // --- NEW: PARTICLE SYSTEM (SNOW/DUST) ---
+                    const particleCount = 2000;
+                    const particlesGeo = new THREE.BufferGeometry();
+                    const positions = new Float32Array(particleCount * 3);
+                    
+                    for (let i = 0; i < particleCount * 3; i += 3) {{
+                        positions[i] = (Math.random() - 0.5) * 200;     // X
+                        positions[i+1] = Math.random() * 100;           // Y (Height)
+                        positions[i+2] = (Math.random() - 0.5) * 200;   // Z
+                    }}
+                    particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                    
+                    const pMaterial = new THREE.PointsMaterial({{
+                        color: 0xffffff,
+                        size: 0.5,
+                        transparent: true,
+                        opacity: 0.8
+                    }});
+                    
+                    const particleSystem = new THREE.Points(particlesGeo, pMaterial);
+                    scene.add(particleSystem);
+                    
                     // --- NEW: PROCEDURAL MOUNTAINS ---
                     const mtnGeo = new THREE.PlaneGeometry(400, 400, 50, 50);
                     const verts = mtnGeo.attributes.position.array;
@@ -317,7 +339,7 @@ def render_3d_simulation(data):
                         line.position.set(6, yPos, 0);
                         scene.add(line);
 
-                        const label = createText(m + "m", "#333333");
+                        const label = createText(m + "m", "#111111");
                         label.position.set(8, yPos, 0);
                         scene.add(label);
                     }}
