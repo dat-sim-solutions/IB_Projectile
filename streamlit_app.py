@@ -233,6 +233,10 @@ def render_3d_simulation(data):
                     return sprite;
                 }}
 
+                // --- 1. THE GRID (The 3D Floor) ---
+                const grid = new THREE.GridHelper(200, 20, 0x888888, 0xcccccc);
+                scene.add(grid);
+
                 // --- 1. THE RULER (Every 50m) ---
                 for (let m = 0; m <= 300; m += 50) {{
                     const yPos = sceneHeight - (m * scale);
@@ -248,13 +252,13 @@ def render_3d_simulation(data):
                 }}
 
                 // --- 2. BUILDING ---
-                const bldMat = new THREE.MeshPhongMaterial({{ color: 0x1c2b42, transparent: true, opacity: 0.1 }});
+                const bldMat = new THREE.MeshPhongMaterial({{ color: 0x1c2b42, transparent: true, opacity: 0.3, shininess: 100 }});
                 const building = new THREE.Mesh(new THREE.BoxGeometry(6, sceneHeight, 6), bldMat);
                 building.position.y = sceneHeight / 2;
                 scene.add(building);
 
                 // --- 3. MAIN SPHERE ---
-                const sphere = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), new THREE.MeshPhongMaterial({{ color: 0xff4b4b }}));
+                const sphere = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), new THREE.MeshPhongMaterial({{ color: 0xff4b4b, shininess: 100 }}));
                 scene.add(sphere);
 
                 // --- 4. GHOSTS WITH DATA LABELS ---
