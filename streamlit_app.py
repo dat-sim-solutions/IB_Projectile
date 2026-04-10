@@ -190,6 +190,9 @@ def render_3d_simulation(data):
     v_data_js = json.dumps(v_vals)
     t_data_js = json.dumps(t_vals)
     
+    # We pass the Python boolean directly into the JS via the f-string
+    rotate_js = "true" if rotate_enabled else "false"
+    
     html_code = f"""
     <html>
     <head>
@@ -206,6 +209,7 @@ def render_3d_simulation(data):
                 const yData = {y_data_js};
                 const vData = {v_data_js};
                 const tData = {t_data_js};
+                const shouldRotate = {rotate_js};
                 const scale = 0.1; 
                 const sceneHeight = 300 * scale; 
                 let frame = 0;
@@ -294,12 +298,20 @@ def render_3d_simulation(data):
 
                 function animate() {{
                     requestAnimationFrame(animate);
-                    // --- 1. ROTATION LOGIC ---
-                    angle += 0.005; // Change this number to adjust speed (0.005 is slow and smooth)
-                    camera.position.x = Math.cos(angle) * radius;
-                    camera.position.z = Math.sin(angle) * radius;
+                    
+                    // Camera Logic
+                    if (shouldRotate) {{
+                        angle += 0.005;  // Change this number to adjust speed (0.005 is slow and smooth)
+                        camera.position.x = Math.cos(angle) * radius;
+                        camera.position.z = Math.sin(angle) * radius;
+                        camera.position.y = 30;
+                    }} else {{
+                        // Fixed "Observer" Position
+                        camera.position.set(70, 30, 70);
+                    }}
                     camera.lookAt(0, 15, 0); // Keep pointing at the center of the building
                     
+                    // Physics Logic
                     if (frame < yData.length) {{
                         sphere.position.y = sceneHeight - (yData[frame] * scale);
                         frame++;
@@ -323,6 +335,10 @@ render_3d_simulation(data)
 # Status Footer --------
 status_color = "green" if 0.05 < data['cfl_limit'] else "red"
 st.sidebar.markdown(f"**Stability (CFL):** :{status_color}[{data['cfl_limit']:.4f}s]")
+
+st.sidebar.divider()
+st.sidebar.header("🕹️ 3D View Settings")
+do_rotate = st.sidebar.checkbox("Auto-Rotate Camera", value=True)
 
 # --- FOOTER / DEVELOPER INFO ---
 st.sidebar.divider()
