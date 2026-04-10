@@ -215,7 +215,7 @@ def render_3d_simulation(data, rotate_enabled):
                 let frame = 0;
                 
                 let angle = 0;
-                const radius = 80; // Distance from the building
+                const radius = 85; // Distance from the building
 
                 const scene = new THREE.Scene();
                 scene.background = new THREE.Color(0xf0f2f6);
@@ -294,9 +294,7 @@ def render_3d_simulation(data, rotate_enabled):
                 scene.add(light);
 
                 camera.position.set(radius, 30, 0);
-                // camera.lookAt(0, 15, 0);
                 
-
                 function animate() {{
                     requestAnimationFrame(animate);
                     
