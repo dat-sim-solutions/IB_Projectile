@@ -231,7 +231,7 @@ def render_3d_simulation(data):
                     const sceneHeight = 300 * scale; 
                     let frame = 0;
                     let angle = 0;
-                    const radius = 70; 
+                    const radius = 50; 
                     let isRotating = true;
 
                     // --- SCENE SETUP ---
