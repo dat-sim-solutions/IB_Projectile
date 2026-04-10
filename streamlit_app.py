@@ -290,7 +290,7 @@ def render_3d_simulation(data, rotate_enabled):
                 light.position.set(10, 20, 10);
                 scene.add(light);
 
-                camera.position.set(60, 20, 40);
+                camera.position.set(80, 30, 80);
                 camera.lookAt(0, 15, 0);
                 
                 let angle = 0;
