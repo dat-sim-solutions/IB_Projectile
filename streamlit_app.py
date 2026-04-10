@@ -224,8 +224,8 @@ def render_3d_simulation(data):
                     const ctx = canvas.getContext('2d');
                     canvas.width = 256; canvas.height = 64;
                     ctx.fillStyle = color;
-                    ctx.font = 'Bold 40px Arial';
-                    ctx.fillText(text, 0, 40);
+                    ctx.font = 'Bold 44px Arial';
+                    ctx.fillText(text, 0, 45);
                     const texture = new THREE.CanvasTexture(canvas);
                     const spriteMat = new THREE.SpriteMaterial({{ map: texture }});
                     const sprite = new THREE.Sprite(spriteMat);
