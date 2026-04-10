@@ -317,7 +317,7 @@ def render_3d_simulation(data):
                         line.position.set(6, yPos, 0);
                         scene.add(line);
 
-                        const label = createText(m + "m", "#555555");
+                        const label = createText(m + "m", "#333333");
                         label.position.set(8, yPos, 0);
                         scene.add(label);
                     }}
