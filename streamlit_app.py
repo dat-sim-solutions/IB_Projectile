@@ -253,7 +253,7 @@ def render_3d_simulation(data):
                 }}
 
                 // --- 2. BUILDING ---
-                const bldMat = new THREE.MeshPhongMaterial({{ color: 0x1c2b42, transparent: true, opacity: 0.3, shininess: 100 }});
+                const bldMat = new THREE.MeshPhongMaterial({{ color: 0x1c2b42, transparent: true, opacity: 0.5, shininess: 100 }});
                 const building = new THREE.Mesh(new THREE.BoxGeometry(6, sceneHeight, 6), bldMat);
                 building.position.y = sceneHeight / 2;
                 scene.add(building);
@@ -263,7 +263,7 @@ def render_3d_simulation(data):
                 scene.add(sphere);
 
                 // --- 4. GHOSTS WITH DATA LABELS ---
-                const ghostMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, transparent: true, opacity: 0.3 }});
+                const ghostMat = new THREE.MeshPhongMaterial({{ color: 0xff4b4b, transparent: true, opacity: 0.5 }});
                 const segments = 5;
                 for (let i = 1; i < segments; i++) {{
                     const idx = Math.floor((i / segments) * yData.length);
