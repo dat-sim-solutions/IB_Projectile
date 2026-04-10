@@ -303,7 +303,8 @@ def render_3d_simulation(data):
 st.divider()
 st.subheader("4. 3D Digital Twin: Real-Time Visualization")
 st.write("Watch the physics in action. The building is scaled to **300m** (approx. 80 stories).")
-render_3d_simulation(data["y_ana"])
+# render_3d_simulation(data["y_ana"])
+render_3d_simulation(data)
 
 # Status Footer --------
 status_color = "green" if 0.05 < data['cfl_limit'] else "red"
