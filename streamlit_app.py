@@ -229,7 +229,8 @@ def render_3d_simulation(data):
                     const texture = new THREE.CanvasTexture(canvas);
                     const spriteMat = new THREE.SpriteMaterial({{ map: texture }});
                     const sprite = new THREE.Sprite(spriteMat);
-                    sprite.scale.set(10, 2.5, 1);
+                    // sprite.scale.set(Width, Height, Depth)
+                    sprite.scale.set(15, 2.5, 1);
                     return sprite;
                 }}
 
