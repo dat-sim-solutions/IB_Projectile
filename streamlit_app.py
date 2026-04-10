@@ -213,6 +213,9 @@ def render_3d_simulation(data, rotate_enabled):
                 const scale = 0.1; 
                 const sceneHeight = 300 * scale; 
                 let frame = 0;
+                
+                let angle = 0;
+                const radius = 80; // Distance from the building
 
                 const scene = new THREE.Scene();
                 scene.background = new THREE.Color(0xf0f2f6);
@@ -290,11 +293,9 @@ def render_3d_simulation(data, rotate_enabled):
                 light.position.set(10, 20, 10);
                 scene.add(light);
 
-                camera.position.set(80, 30, 80);
-                camera.lookAt(0, 15, 0);
+                camera.position.set(radius, 30, 0);
+                // camera.lookAt(0, 15, 0);
                 
-                let angle = 0;
-                const radius = 80; // Distance from the building
 
                 function animate() {{
                     requestAnimationFrame(animate);
@@ -302,14 +303,12 @@ def render_3d_simulation(data, rotate_enabled):
                     // Camera Logic
                     if (shouldRotate) {{
                         angle += 0.005;  // Change this number to adjust speed (0.005 is slow and smooth)
-                        camera.position.x = Math.cos(angle) * radius;
-                        camera.position.z = Math.sin(angle) * radius;
-                        camera.position.y = 30;
-                        camera.lookAt(0, 15, 0);
-                    }} 
-                    
-                    camera.lookAt(0, 15, 0); // Keep pointing at the center of the building
-                    
+                    }}
+                    camera.position.x = Math.cos(angle) * radius;
+                    camera.position.z = Math.sin(angle) * radius;
+                    camera.position.y = 30;
+                    camera.lookAt(0, 15, 0);
+                            
                     // Physics Logic
                     if (frame < yData.length) {{
                         sphere.position.y = sceneHeight - (yData[frame] * scale);
