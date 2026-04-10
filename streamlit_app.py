@@ -305,10 +305,9 @@ def render_3d_simulation(data, rotate_enabled):
                         camera.position.x = Math.cos(angle) * radius;
                         camera.position.z = Math.sin(angle) * radius;
                         camera.position.y = 30;
-                    }} else {{
-                        // Fixed "Observer" Position
-                        camera.position.set(80, 30, 80);
-                    }}
+                        camera.lookAt(0, 15, 0);
+                    }} 
+                    
                     camera.lookAt(0, 15, 0); // Keep pointing at the center of the building
                     
                     // Physics Logic
