@@ -239,7 +239,7 @@ def render_3d_simulation(y_positions):
                    const ghost = new THREE.Mesh(sphGeo, ghostMat);
                    ghost.position.set(0, sceneHeight - (yData[i] * scale), 0);
                    scene.add(ghost);
-                }
+               }
 
                 // Visual Aid: Grid
                 const grid = new THREE.GridHelper(100, 20);
