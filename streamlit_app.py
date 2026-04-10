@@ -277,7 +277,7 @@ def render_3d_simulation(data):
                         scene.add(line);
 
                         const label = createText(m + "m", "#555555");
-                        label.position.set(18, yPos, 0);
+                        label.position.set(8, yPos, 0);
                         scene.add(label);
                     }}
 
@@ -306,7 +306,7 @@ def render_3d_simulation(data):
                         ghost.position.set(-6, yPos, 0);
                         scene.add(ghost);
 
-                        const info = "t:" + tData[idx].toFixed(1) + "s v:" + vData[idx].toFixed(1);
+                        const info = "t:" + tData[idx].toFixed(1) + "s; v:" + vData[idx].toFixed(1)+ " m/s";
                         const label = createText(info, "#ff4b4b");
                         label.position.set(-12, yPos, 0);
                         scene.add(label);
