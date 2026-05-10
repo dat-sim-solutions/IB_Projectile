@@ -29,6 +29,8 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     st.write(" Terminal velocity and its Percentage (Fractional) Uncertainty:")
     st.latex(r"v_{terminal} = \sqrt{\frac{mg}{k}} = \sqrt{\frac{2mg}{\rho C_d A}}")
     st.latex(r"\Delta \% v_t = \frac{1}{2} (\Delta \% m + \Delta \% A)")
+    st.write(" Absolute Uncertainty of Terminal velocity:")
+    st.latex(r"v_t \times \Delta \% v_t")
     st.write(" Theoretical range, error:")
     st.latex(r"\text{Between } (v_{terminal}-v_{terminal}\times \Delta \% v_t) \text{ and } (v_{terminal}+v_{terminal}\times \Delta \% v_t)")
     st.write("Theory of Power Laws:")
