@@ -30,7 +30,7 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     st.latex(r"v_{terminal} = \sqrt{\frac{mg}{k}} = \sqrt{\frac{2mg}{\rho C_d A}}")
     st.latex(r"\Delta \% v_t = \frac{1}{2} (\Delta \% m + \Delta \% A)")
     st.write(" Theoretical range, error:")
-    st.latex(r"v_{terminal}-v_{terminal}\times \Delta \% v_t; v_{terminal}+v_{terminal}\times \Delta \% v_t")
+    st.latex(r"\text{Between } v_{terminal}-v_{terminal}\times \Delta \% v_t \text{ and } v_{terminal}+v_{terminal}\times \Delta \% v_t")
     st.write("Theory of Power Laws:")
     st.write("If Q")
     st.latex(r"Q = x^a y^b z^c")
