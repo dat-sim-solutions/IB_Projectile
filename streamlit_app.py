@@ -25,6 +25,7 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     - $v_{n+1} = v_n + a_n \Delta t$
     - $y_{n+1} = y_n + v_n \Delta t$
     """)
+    
     st.latex(r"v_{terminal} = \sqrt{\frac{mg}{k}} = \sqrt{\frac{2mg}{\rho C_d A}")
     st.write("Percentage uncertainty of Terminal velocity:")
     st.latex(r"\Delta \% v_t = \frac{1}{2} (\Delta \% m + \Delta \% A)")
