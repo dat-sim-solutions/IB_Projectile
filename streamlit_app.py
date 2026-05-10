@@ -36,7 +36,7 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     st.write("Theory of Power Laws:")
     st.write("If Q")
     st.latex(r"Q = x^a y^b z^c")
-    st.write("Its Percentage (Fractional) Uncertainty")
+    st.write("Its Fractional Uncertainty")
     st.latex(r"\frac{\Delta Q}{Q} = |a| \frac{\Delta x}{x} + |b| \frac{\Delta y}{y} + |c| \frac{\Delta z}{z}")
     
 
