@@ -26,11 +26,15 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     - $y_{n+1} = y_n + v_n \Delta t$
     """)
     
-    st.write(" Terminal velocity and its Percentage Uncertainty:")
+    st.write(" Terminal velocity and its Percentage (Fractional) Uncertainty:")
     st.latex(r"v_{terminal} = \sqrt{\frac{mg}{k}} = \sqrt{\frac{2mg}{\rho C_d A}}")
     st.latex(r"\Delta \% v_t = \frac{1}{2} (\Delta \% m + \Delta \% A)")
     st.latex(r"error = v_{terminal}\times \Delta \% v_t")
-    st.write("Theory of Power Laws:...")
+    st.write("Theory of Power Laws:")
+    st.write("If Q")
+    st.latex(r"Q = x^a y^b z^c")
+    st.write("Its Percentage (Fractional) Uncertainty")
+    st.latex(r"\frac{\Delta Q}{Q} = |a| \frac{\Delta x}{x} + |b| \frac{\Delta y}{y} + |c| \frac{\Delta z}{z}")
     
 
 # --- SIDEBAR: CONTROLS ---
