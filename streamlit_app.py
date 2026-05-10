@@ -26,8 +26,8 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     - $y_{n+1} = y_n + v_n \Delta t$
     """)
     
+    st.write(" Terminal velocity and its Percentage Uncertainty:")
     st.latex(r"v_{terminal} = \sqrt{\frac{mg}{k}} = \sqrt{\frac{2mg}{\rho C_d A}")
-    st.write("Percentage uncertainty of Terminal velocity:")
     st.latex(r"\Delta \% v_t = \frac{1}{2} (\Delta \% m + \Delta \% A)")
     st.latex(r"error = v_{terminal}\times \Delta \% v_t")
     st.write("Theory of Power Laws:...")
