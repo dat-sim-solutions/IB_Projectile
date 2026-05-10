@@ -31,7 +31,7 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     st.latex(r"\Delta \% v_t = \frac{1}{2} (\Delta \% m + \Delta \% A)")
     st.write(" Absolute Uncertainty of Terminal velocity:")
     st.latex(r"v_t \times \Delta \% v_t /100 = v_t \times \Delta_{fractional} v_t")
-    st.write(" Theoretical range, error:")
+    st.write(" Theoretical range, error (Set up Propagation):")
     st.latex(r"\text{Between } (v_t-v_t\times \Delta_{fractional} v_t) \text{ and } (v_t+v_t\times \Delta_{fractional} v_t)")
     st.write("Theory of Power Laws:")
     st.write("If Q")
