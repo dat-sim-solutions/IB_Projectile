@@ -31,9 +31,8 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     - $y_{n+1} = y_n + v_n \Delta t$
     """)
     
-    st.write(" Terminal velocity and its Percentage (= Fractional x 100) Uncertainty:")
-    st.latex(r"v_t = \sqrt{\frac{2mg}{\rho C_d A}}")
-    st.latex(r"\Delta \% v_t = \frac{1}{2} (\Delta \% m + \Delta \% A)")
+    st.write(" Percentage (= Fractional x 100) Uncertainty of Terminal velocity:")
+    st.latex(r"\Delta \% v_t = \frac{1}{2} (\Delta \% m + \Delta \% A) \quad \text{alternatively} \quad v_t = \sqrt{\frac{2mg}{\rho C_d A}} ")
     st.write(" Absolute Uncertainty of Terminal velocity:")
     st.latex(r"v_t \times \Delta \% v_t /100 = v_t \times \Delta_{fractional} v_t")
     st.write(" Theoretical range, error (Set up Propagation):")
