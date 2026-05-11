@@ -43,11 +43,15 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     st.latex(r"\frac{dv}{dv_{t}}=\tanh \left(\frac{gt}{v_{t}}\right)-\frac{gt}{v_{t}}\text{sech}^{2}\left(\frac{gt}{v_{t}}\right)")
     st.latex(r"\text{For a value } v \text{, the Theoretical Range is } v \pm \Delta v ")
 
-    
     st.write("Absolute Uncertainty in acceleration (from Uncertainty of f(x))")
     st.latex(r"\Delta a = \left| \frac{da}{dv} \right| \Delta v = \left( \frac{2kv}{m} \right) \Delta v \text{ with } a = g - \frac{k}{m}v^2")
 
-
+    st.info("""
+    General Law of Uncertainty Propagation for $f(x,y)$
+    $$ \Delta f = \sqrt{\left(\frac{\partial f}{\partial x} \Delta x\right)^2 + \left(\frac{\partial f}{\partial y} \Delta y\right)^2} $$
+    - $v_{n+1} = v_n + a_n \Delta t$
+    - $y_{n+1} = y_n + v_n \Delta t$
+    """)
     
     st.write("Theory of Power Laws:")
     st.write("If Q")
@@ -168,7 +172,7 @@ st.pyplot(fig1)
 
 # --- SECTION 2: STATISTICAL ERROR ANALYSIS ---
 st.divider()
-st.subheader("2. Statistical Verification of Sensor Noise")
+st.subheader("2. Statistical Verification of Sensor Noise, for v")
 res = data["residuals"]
 fig2, (ax_res, ax_box, ax_vio) = plt.subplots(1, 3, figsize=(15, 6), gridspec_kw={'width_ratios': [3, 1, 1]})
 
