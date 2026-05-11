@@ -22,7 +22,7 @@ with st.expander("📘 View Mathematical & Numerical Model"):
 
     st.write("Analytical Solutions:")
     st.latex(r"v(t)=v_{t}\tanh \left(\frac{gt}{v_{t}}\right) \quad \text{where terminal velocity} \quad v_t = \sqrt{\frac{mg}{k}}")
-    st.latex(r" a(t)= g\>\mathrm{sech}\>{}^{2}\left(\frac{gt}{v_{t}}\right) \quad \text{alternatively} \quad \sech^2(u) =1 - \tanh^2(u) ")
+    st.latex(r" a(t)= g\>\mathrm{sech}\>{}^{2}\left(\frac{gt}{v_{t}}\right) \quad \text{alternatively} \quad \>\mathrm{sech}\>{}^{2}(u) =1 - \tanh^2(u) ")
     st.latex(r"y(t)=\frac{v_{t}^{2}}{g}\ln \left[\cosh \left(\frac{gt}{v_{t}}\right)\right] ")
     
     st.info("""
