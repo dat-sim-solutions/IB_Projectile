@@ -31,12 +31,14 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     - $y_{n+1} = y_n + v_n \Delta t$
     """)
     
-    st.write(" Percentage (= Fractional x 100) Uncertainty of Terminal velocity:")
-    st.latex(r"\Delta \% v_t = \frac{1}{2} (\Delta \% m + \Delta \% A) \quad \text{where} \quad v_t = \sqrt{\frac{2mg}{\rho C_d A}} ")
-    st.write(" Absolute Uncertainty of Terminal velocity:")
-    st.latex(r"v_t \times \Delta \% v_t /100 = v_t \times \Delta_{fractional} v_t")
-    st.write(" Theoretical range, error (Set up Propagation):")
-    st.latex(r"\text{Between } (v_t-v_t\times \Delta_{fractional} v_t) \text{ and } (v_t+v_t\times \Delta_{fractional} v_t)")
+    st.write(" ")
+    st.latex(r" ")
+    st.write("Absolute Uncertainty in Velocity (from Teory of Power Law)")
+    st.latex(r"\frac{\Delta v_t}{v_t} = \frac{1}{2} (\frac{\Delta m}{m} + \frac{\Delta A}{A}) \text{ is calculated}")
+    st.latex(r"\Delta v_t = \text{number} \times v_t")
+    st.latex(r"\text{For a value} v_t \text{, the Theoretical Range is } v_t \pm \Delta v_t ")
+    
+    
     st.write("Theory of Power Laws:")
     st.write("If Q")
     st.latex(r"Q = x^a y^b z^c")
