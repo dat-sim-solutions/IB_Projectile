@@ -19,6 +19,11 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     
     st.write("Rearranging to find the instantaneous acceleration:")
     st.latex(r"a(t) = g - \frac{k}{m}v(t)^2 \quad \text{where} \quad k = \frac{1}{2} \rho C_d A")
+
+    st.write("Analytical Solutions:")
+    st.latex(r"v(t)=v_{t}\tanh \left(\frac{gt}{v_{t}}\right) \quad \text{where terminal velocity} \quad v_t = \sqrt{\frac{mg}{k}}")
+    st.latex(r" a")
+    st.latex(r" a")
     
     st.info("""
     **Numerical Method:** The simulation uses the **Euler Method** for integration:
@@ -27,7 +32,7 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     """)
     
     st.write(" Terminal velocity and its Percentage (= Fractional x 100) Uncertainty:")
-    st.latex(r"v_{terminal}=v_t = \sqrt{\frac{mg}{k}} = \sqrt{\frac{2mg}{\rho C_d A}}")
+    st.latex(r"v_t = \sqrt{\frac{2mg}{\rho C_d A}}")
     st.latex(r"\Delta \% v_t = \frac{1}{2} (\Delta \% m + \Delta \% A)")
     st.write(" Absolute Uncertainty of Terminal velocity:")
     st.latex(r"v_t \times \Delta \% v_t /100 = v_t \times \Delta_{fractional} v_t")
