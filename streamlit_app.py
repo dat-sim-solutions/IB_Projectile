@@ -41,7 +41,7 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     st.latex(r"\frac{dv}{dv_{t}}=\tanh \left(\frac{gt}{v_{t}}\right)-\frac{gt}{v_{t}}\text{sech}^{2}\left(\frac{gt}{v_{t}}\right)")
     st.latex(r"\text{For a value } v \text{, the Theoretical Range is } v \pm \Delta v ")
 
-    st.write("Absolute Uncertainty in acceleration (from Uncertainty of f(x))")
+    st.write("Absolute Uncertainty in acceleration (from Uncertainty of f(x)) as a function of $v_t$")
     st.latex(r"\Delta a = \left| \frac{da}{dv} \right| \Delta v = \left( \frac{2kv}{m} \right) \Delta v \text{ with } a = g - \frac{k}{m}v^2")
 
     st.info(r"""
