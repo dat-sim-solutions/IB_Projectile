@@ -31,9 +31,7 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     - $y_{n+1} = y_n + v_n \Delta t$
     """)
     
-    st.write(" ")
-    st.latex(r" ")
-    st.write("Absolute Uncertainty in Velocity:")
+    st.write("**Absolute Uncertainty in Velocity:**")
     st.write("First for terminal velocity. (from Theory of Power Law)")
     st.latex(r"\frac{\Delta v_t}{v_t} = \frac{1}{2} (\frac{\Delta m}{m} + \frac{\Delta A}{A}) \text{ is calculated}")
     st.latex(r"\Delta v_t = \text{number} \times v_t")
