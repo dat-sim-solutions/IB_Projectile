@@ -443,7 +443,7 @@ render_3d_simulation(data)
 
 # Status Footer --------
 status_color = "green" if 0.05 < data['cfl_limit'] else "red"
-st.sidebar.markdown(f"**Stability (CFL): dt < ** :{status_color}[{data['cfl_limit']:.4f}s]")
+st.sidebar.markdown(f"**Stability (CFL)**: dt < :{status_color}[{data['cfl_limit']:.4f}s]")
 
 # --- FOOTER / DEVELOPER INFO ---
 st.sidebar.divider()
