@@ -49,7 +49,8 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     st.info(r"""
     General Law of Uncertainty Propagation for $f(x,y)$:  
     $ \Delta f = \sqrt{\left(\frac{\partial f}{\partial x} \Delta x\right)^2 + \left(\frac{\partial f}{\partial y} \Delta y\right)^2} $
-    - For $Q = x^a y^b z^c$, $\frac{\Delta f}{f} = \sqrt{\left(a \frac{\Delta x}{x}\right)^2 + \left(b \frac{\Delta y}{y}\right)^2}$
+    - For $Q = x^a y^b z^c$ we have $\frac{\Delta f}{f} = \sqrt{\left(a \frac{\Delta x}{x}\right)^2 + \left(b \frac{\Delta y}{y}\right)^2}$
+    that simplified is the power law $\frac{\Delta Q}{Q} = |a| \frac{\Delta x}{x} + |b| \frac{\Delta y}{y} + |c| \frac{\Delta z}{z}$
     - d
     """)
     
