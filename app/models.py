@@ -16,10 +16,21 @@ def run_physics_simulation(m=0.5, A=0.01, g=9.81, rho=1.225, Cd=0.47, dt=0.05, t
     v_t_theory_err = v_terminal * uncertainty_vt_fract
     
     # 3. Physics Solutions
-    v_ana = v_terminal * np.tanh((g * t) / v_terminal)
-    a_ana = g * (1 - np.tanh((g * t) / v_terminal)**2)
-    y_ana = (v_terminal**2 / g) * np.log(np.cosh((g * t) / v_terminal))
-    
+    arg = (g * t) / v_terminal  
+    tanh_arg = np.tanh(arg)
+    sech2_arg = 1 - tanh_arg**2 # Using the identity sech^2(x) = 1 - tanh^2(x)
+                             
+    v_ana = v_terminal * tanh_arg
+    a_ana = g * sech2_arg
+    y_ana = (v_terminal**2 / g) * np.log(np.cosh(arg))
+                             
+    # NEW: Dynamic Setup Error (The "Funnel" Effect)
+    # This scales the theoretical error so it grows from 0 up to v_t_theory_err
+    # Rigorous Uncertainty Propagation: dv/dvt * delta_vt
+    # Using your derived formula: dv/dvt = tanh(arg) - arg * sech^2(arg)  
+    dv_dvt = tanh_arg - (arg * sech2_arg)
+    v_t_dynamic_err = np.abs(dv_dvt) * v_t_theory_err                         
+                             
     # Numerical (Euler)
     v_num = np.zeros(len(t)); y_num = np.zeros(len(t)); a_num = np.zeros(len(t))
     for n in range(0, len(t) - 1):
@@ -41,7 +52,8 @@ def run_physics_simulation(m=0.5, A=0.01, g=9.81, rho=1.225, Cd=0.47, dt=0.05, t
         "t": t, "v_ana": v_ana, "a_ana": a_ana, "y_ana": y_ana,
         "v_num": v_num, "a_num": a_num, "y_num": y_num,
         "v_noisy": v_noisy, "a_noisy": a_noisy, "y_noisy": y_noisy,
-        "v_t_theory_err": v_t_theory_err, "v_uncert_abs": v_uncert_abs,
+        "v_t_theory_err": v_t_dynamic_err,
+        "v_uncert_abs": v_uncert_abs,
         "y_uncert_abs": y_uncert_abs, "a_uncert_abs": a_uncert_abs,
         "residuals": residuals, "v_terminal": v_terminal, "cfl_limit": cfl_limit
     }
