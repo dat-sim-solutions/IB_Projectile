@@ -33,6 +33,7 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     
     st.write("**Absolute Uncertainty in Velocity:**")
     st.write("First for $v_t$. (from Theory of Power Law)")
+    st.write("[from  $A = \frac{\pi}{4}d^2$ we have $\frac{\Delta A}{A} = 2 \frac{\Delta d}{d}$ via Theory of Power Law")
     st.latex(r"\frac{\Delta v_t}{v_t} = \frac{1}{2} (\frac{\Delta m}{m} + \frac{\Delta A}{A}) \text{ is calculated}")
     st.latex(r"\Delta v_t = \text{number} \times v_t")
     st.latex(r"\text{For a value } v_t \text{, the Theoretical Range is } v_t \pm \Delta v_t ")
