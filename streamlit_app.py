@@ -48,17 +48,11 @@ with st.expander("📘 View Mathematical & Numerical Model"):
 
     st.info(r"""
     General Law of Uncertainty Propagation for $f(x,y)$:  
-    $ \Delta f = \sqrt{\left(\frac{\partial f}{\partial x} \Delta x\right)^2 + \left(\frac{\partial f}{\partial y} \Delta y\right)^2} $
-    - For $Q = x^a y^b z^c$ we have $\frac{\Delta f}{f} = \sqrt{\left(a \frac{\Delta x}{x}\right)^2 + \left(b \frac{\Delta y}{y}\right)^2}$
-    that simplified is the power law $\frac{\Delta Q}{Q} = |a| \frac{\Delta x}{x} + |b| \frac{\Delta y}{y} + |c| \frac{\Delta z}{z}$
-    - d
+    $ \Delta f = \sqrt{\left(\frac{\partial f}{\partial x} \Delta x\right)^2 + \left(\frac{\partial f}{\partial y} \Delta y\right)^2 + \left(\frac{\partial f}{\partial z} \Delta z\right)^2} $
+    - For $f = x^a y^b z^c$ we have $\frac{\Delta f}{f} = \sqrt{\left(a \frac{\Delta x}{x}\right)^2 + \left(b \frac{\Delta y}{y}\right)^2}$
+    that simplified is the Power Law $\frac{\Delta f}{f} = |a| \frac{\Delta x}{x} + |b| \frac{\Delta y}{y} + |c| \frac{\Delta z}{z}$
+    - For a general function of one variable $f(x)$ we have $\Delta f(x)= \left| \frac{\partial f}{\partial x} \right| \Delta x $
     """)
-    
-    st.write("Theory of Power Laws:")
-    st.write("If Q")
-    st.latex(r"Q = x^a y^b z^c")
-    st.write("Its Fractional Uncertainty")
-    st.latex(r"\frac{\Delta Q}{Q} = |a| \frac{\Delta x}{x} + |b| \frac{\Delta y}{y} + |c| \frac{\Delta z}{z}")
     
 
 # --- SIDEBAR: CONTROLS ---
