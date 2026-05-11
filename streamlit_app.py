@@ -47,8 +47,8 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     st.latex(r"\Delta a = \left| \frac{da}{dv} \right| \Delta v = \left( \frac{2kv}{m} \right) \Delta v \text{ with } a = g - \frac{k}{m}v^2")
 
     st.info("""
-    General Law of Uncertainty Propagation for $f(x,y)$
-    $ \Delta f = \sqrt{\left(\frac{\partial f}{\partial x} \Delta x\right)^2 + \left(\frac{\partial f}{\partial y} \Delta y\right)^2} $
+    General Law of Uncertainty Propagation for $f(x,y)$:  
+    $$ \Delta f = \sqrt{\left(\frac{\partial f}{\partial x} \Delta x\right)^2 + \left(\frac{\partial f}{\partial y} \Delta y\right)^2} $$
     - $v_{n+1} = v_n + a_n \Delta t$
     - $y_{n+1} = y_n + v_n \Delta t$
     """)
