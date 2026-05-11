@@ -32,16 +32,16 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     """)
     
     st.write("**Absolute Uncertainty in Velocity:**")
-    st.write("First for terminal velocity. (from Theory of Power Law)")
+    st.write("First for $v_t$. (from Theory of Power Law)")
     st.latex(r"\frac{\Delta v_t}{v_t} = \frac{1}{2} (\frac{\Delta m}{m} + \frac{\Delta A}{A}) \text{ is calculated}")
     st.latex(r"\Delta v_t = \text{number} \times v_t")
     st.latex(r"\text{For a value } v_t \text{, the Theoretical Range is } v_t \pm \Delta v_t ")
-    st.write("For the velocity as a function of terminal velocity")
+    st.write("For the velocity as a function of $v_t$  (from Uncertainty of f(x))")
     st.latex(r"\Delta v(v_t)= \left| \frac{\partial v}{\partial v_t} \right| \Delta v_t")
     st.latex(r"\frac{dv}{dv_{t}}=\tanh \left(\frac{gt}{v_{t}}\right)-\frac{gt}{v_{t}}\text{sech}^{2}\left(\frac{gt}{v_{t}}\right)")
     st.latex(r"\text{For a value } v \text{, the Theoretical Range is } v \pm \Delta v ")
 
-    st.write("Absolute Uncertainty in acceleration (from Uncertainty of f(x)) as a function of $v_t$")
+    st.write("**Absolute Uncertainty in acceleration** as a function of $v_t$")
     st.latex(r"\Delta a = \left| \frac{da}{dv} \right| \Delta v = \left( \frac{2kv}{m} \right) \Delta v \text{ with } a = g - \frac{k}{m}v^2")
 
     st.info(r"""
