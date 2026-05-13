@@ -125,10 +125,10 @@ ax1.set_ylabel("Velocity (m/s)"); ax1.legend(loc='lower right'); ax1.grid(True, 
 
 # Acceleration
 ax2.fill_between(data["t"], data["a_ana"] - data["a_uncert_abs"], data["a_ana"] + data["a_uncert_abs"], 
-                 color='blue', alpha=0.4, label='Δa if manufacturer-specified, Sensor Precision Envelope')
-ax2.plot(data["t"], data["a_ana"], 'k')
-ax2.plot(data["t"], data["a_num"], 'g--')
-ax2.scatter(data["t"], data["a_noisy"], color='red', s=8, alpha=0.5)
+                 color='blue', alpha=0.3, label='Δa, if sensor, manufacturer-specified, Sensor Precision Envelope')
+ax2.plot(data["t"], data["a_ana"], 'k', label='Theory (Analytical))
+ax2.plot(data["t"], data["a_num"], 'g--', label='Numerical (Euler))
+ax2.scatter(data["t"], data["a_noisy"], color='red', s=8, alpha=0.7, label='if Sensor, Data')
 ax2.set_ylabel("Acceleration (m/s^2)"); ax2.legend(loc='lower right'); ax2.grid(True, alpha=0.3)
 
 # Position
