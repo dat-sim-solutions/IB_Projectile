@@ -117,14 +117,15 @@ fig1, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 14))
 ax1.fill_between(data["t"], data["v_ana"] - data["v_uncert_abs"], data["v_ana"] + data["v_uncert_abs"], 
                  color='blue', alpha=0.2, label='Δv, Sensor Precision Envelope')
 ax1.fill_between(data["t"], data["v_ana"] - data["v_t_theory_err"], data["v_ana"] + data["v_t_theory_err"], 
-                 color='none', edgecolor='orange', hatch='//', alpha=0.4, label='Δv(Δm,ΔA), Setup Propagation')
+                 color='none', edgecolor='orange', hatch='//', alpha=0.6, label='Δv(Δm,ΔA), Setup Propagation')
 ax1.plot(data["t"], data["v_ana"], 'k', label='Theory (Analytical)')
 ax1.plot(data["t"], data["v_num"], 'g--', label='Numerical (Euler)')
 ax1.scatter(data["t"], data["v_noisy"], color='red', s=8, alpha=0.5, label='Sensor Data')
 ax1.set_ylabel("Velocity (m/s)"); ax1.legend(loc='lower right'); ax1.grid(True, alpha=0.3)
 
 # Acceleration
-ax2.fill_between(data["t"], data["a_ana"] - data["a_uncert_abs"], data["a_ana"] + data["a_uncert_abs"], color='blue', alpha=0.15)
+ax2.fill_between(data["t"], data["a_ana"] - data["a_uncert_abs"], data["a_ana"] + data["a_uncert_abs"], 
+                 color='blue', alpha=0.15)
 ax2.plot(data["t"], data["a_ana"], 'k')
 ax2.plot(data["t"], data["a_num"], 'g--')
 ax2.scatter(data["t"], data["a_noisy"], color='red', s=8, alpha=0.5)
