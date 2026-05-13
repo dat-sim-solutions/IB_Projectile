@@ -131,7 +131,7 @@ ax2.fill_between(data["t"], data["a_ana"] - data["a_uncert_abs"], data["a_ana"] 
 ax2.plot(data["t"], data["a_ana"], 'k', label='Theory (Analytical)')
 ax2.plot(data["t"], data["a_num"], 'g--', label='Numerical (Euler)')
 ax2.scatter(data["t"], data["a_noisy"], color='red', s=8, alpha=0.7, label='Sensor Data, it calculates using Δv')
-ax2.set_ylabel("Acceleration (m/s^2)"); ax2.legend(loc='lower right'); ax2.grid(True, alpha=0.3)
+ax2.set_ylabel("Acceleration (m/s^2)"); ax2.legend(loc='upper right'); ax2.grid(True, alpha=0.3)
 
 # Position
 ax3.fill_between(data["t"], data["y_ana"] - data["y_uncert_abs"], data["y_ana"] + data["y_uncert_abs"], color='blue', alpha=0.15)
