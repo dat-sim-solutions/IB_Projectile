@@ -205,8 +205,8 @@ st.divider()
 st.subheader("3. Local Interval Inspection (4.0s - 5.0s)")
 st.write("""
 **Error bar**: Vertical is the uncertainty in sensor precision (Δv).  
-Horizontal is the uncertainty in time frame. Syncronization error.
-The hitting a certain point and the camera actually recording that frame (Δt=0.05).
+Horizontal is the uncertainty in time frame, **Sync**ronization error.
+The ball hitting a certain point and the camera actually recording that frame (Δt=0.05).
 """)
 mask = (data["t"] >= 4.0) & (data["t"] <= 5.0)
 fig3, ax_zoom = plt.subplots(figsize=(10, 4))
