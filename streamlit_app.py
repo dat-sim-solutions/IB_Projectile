@@ -135,7 +135,7 @@ ax2.set_ylabel("Acceleration (m/s^2)"); ax2.legend(loc='upper right'); ax2.grid(
 
 # Position
 ax3.fill_between(data["t"], data["y_ana"] - data["y_uncert_abs"], data["y_ana"] + data["y_uncert_abs"], 
-                 color='blue', alpha=0.3, label='Δv, Sensor Precision Envelope')
+                 color='blue', alpha=0.3, label='Δy, Sensor Precision Envelope')
 ax3.plot(data["t"], data["y_ana"], 'k', label='Theory (Analytical)')
 ax3.plot(data["t"], data["y_num"], 'g--', label='Numerical (Euler)')
 ax3.scatter(data["t"], data["y_noisy"], color='red', s=8, alpha=0.7, label='Sensor Data')
@@ -176,11 +176,12 @@ fig2, (ax_res, ax_box, ax_vio) = plt.subplots(1, 3, figsize=(15, 6), gridspec_kw
 
 # Residuals with Envelopes
 ax_res.axhline(0, color='black', linestyle='--')
-ax_res.fill_between(data["t"], -data["v_t_theory_err"], data["v_t_theory_err"], color='orange', alpha=0.1, label='Setup Limit')
-ax_res.fill_between(data["t"], -data["v_uncert_abs"], data["v_uncert_abs"], color='gray', alpha=0.2, label='Sensor Limit')
-ax_res.scatter(data["t"], res, color='red', s=8, alpha=0.4)
-ax_res.set_ylabel("Error (m/s)"); ax_res.set_title("Residuals vs. Time")
-ax_res.set_xlim(time_range)
+ax_res.fill_between(data["t"], -data["v_t_theory_err"], data["v_t_theory_err"], color='orange', 
+                    edgecolor='orange', hatch='//', alpha=0.7, label='Δv(Δm,ΔA) Setup Limit')
+ax_res.fill_between(data["t"], -data["v_uncert_abs"], data["v_uncert_abs"], color='gray', alpha=0.2, label='Δv Sensor Limit')
+ax_res.scatter(data["t"], res, color='red', s=8, alpha=0.7, label='Sensor Data Residuals')
+ax_res.set_ylabel("Error (m/s)"); ax_res.set_title("Residuals (noisy - analytical) vs. Time")
+ax_res.set_xlim(time_range); ax_res.legend(loc='lower right')
 
 # Box Plot
 ax_box.boxplot(res, vert=True, patch_artist=True, boxprops=dict(facecolor='tomato', alpha=0.4))
