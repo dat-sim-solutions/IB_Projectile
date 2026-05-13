@@ -31,7 +31,8 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     - $y_{n+1} = y_n + v_n \Delta t$
     """)
     
-    st.write("**Absolute Uncertainty in Velocity:**")
+    st.write("**Absolute Uncertainty in Velocity:** $\Delta v$ from sensor")
+    st.write("**Absolute Uncertainty in Velocity** $\Delta v$ from set up propagation of experiment ($\Delta m, \Delta A$:)")
     st.write("First for $v_t$. (from Theory of Power Law)")
     st.write(r"(from  $A = \frac{\pi}{4}d^2$ we have $\frac{\Delta A}{A} = 2 \frac{\Delta d}{d}$ via Theory of Power Law)")
     st.latex(r"\frac{\Delta v_t}{v_t} = \frac{1}{2} (\frac{\Delta m}{m} + \frac{\Delta A}{A}) \text{ is calculated}")
@@ -125,7 +126,7 @@ ax1.set_ylabel("Velocity (m/s)"); ax1.legend(loc='lower right'); ax1.grid(True, 
 
 # Acceleration
 ax2.fill_between(data["t"], data["a_ana"] - data["a_uncert_abs"], data["a_ana"] + data["a_uncert_abs"], 
-                 color='blue', alpha=0.3, label='Δa, if sensor, manufacturer-specified, Sensor Precision Envelope')
+                 color='blue', alpha=0.3, label='Δa (Δv), Sensor Precision Envelope')
 ax2.plot(data["t"], data["a_ana"], 'k', label='Theory (Analytical)')
 ax2.plot(data["t"], data["a_num"], 'g--', label='Numerical (Euler)')
 ax2.scatter(data["t"], data["a_noisy"], color='red', s=8, alpha=0.7, label='if Sensor, Data')
