@@ -177,8 +177,8 @@ fig2, (ax_res, ax_box, ax_vio) = plt.subplots(1, 3, figsize=(15, 6), gridspec_kw
 # Residuals with Envelopes
 ax_res.axhline(0, color='black', linestyle='--')
 ax_res.fill_between(data["t"], -data["v_t_theory_err"], data["v_t_theory_err"], color='orange', 
-                    edgecolor='orange', hatch='//', alpha=0.7, label='Δv(Δm,ΔA) Setup Limit')
-ax_res.fill_between(data["t"], -data["v_uncert_abs"], data["v_uncert_abs"], color='gray', alpha=0.2, label='Δv Sensor Limit')
+                    edgecolor='none', hatch='//', alpha=0.7, label='Δv(Δm,ΔA) Setup Limit')
+ax_res.fill_between(data["t"], -data["v_uncert_abs"], data["v_uncert_abs"], color='gray', alpha=0.3, label='Δv Sensor Limit')
 ax_res.scatter(data["t"], res, color='red', s=8, alpha=0.7, label='Sensor Data Residuals')
 ax_res.set_ylabel("Error (m/s)"); ax_res.set_title("Residuals (noisy - analytical) vs. Time")
 ax_res.set_xlim(time_range); ax_res.legend(loc='lower right')
