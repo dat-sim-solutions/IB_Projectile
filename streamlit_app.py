@@ -45,7 +45,7 @@ with st.expander("📘 View Mathematical & Numerical Model"):
 
     st.write("**Absolute Uncertainty in acceleration** as a function of $v$")
     st.latex(r"\Delta a = \left| \frac{da}{dv} \right| \Delta v = \left( \frac{2kv}{m} \right) \Delta v \text{ with } a = g - \frac{k}{m}v^2")
-    st.write(r"There is one $\Delta a$ from sensor and from set up propagation depending on what $\Delta v$ you choose.")
+    st.write(r"There is one $\Delta a$ from sensor (instrumental) and one $\Delta a$ from set up propagation (systemic) depending on what $\Delta v$ you choose.")
     
     st.info(r"""
     General Law of Uncertainty Propagation for $f(x,y,z)$:  
