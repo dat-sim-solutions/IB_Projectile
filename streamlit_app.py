@@ -203,8 +203,9 @@ st.pyplot(fig2)
 # --- SECTION 3: MICRO-ANALYSIS WINDOW ---
 st.divider()
 st.subheader("3. Local Interval Inspection (4.0s - 5.0s)")
-st.write("**Error bar**: horizontal uncertainty in time (Δt=0.05), vertical uncertainty in sensor precision (Δv).")
-st.write("E ")
+st.write("**Error bar**: Vertical is the uncertainty in sensor precision (Δv) ")
+st.write("Horizontal is the uncertainty in time frame. Syncronization error. The hitting a certain point and the camera actually recording that frame (Δt=0.05).")
+
 mask = (data["t"] >= 4.0) & (data["t"] <= 5.0)
 fig3, ax_zoom = plt.subplots(figsize=(10, 4))
 ax_zoom.plot(data["t"][mask], data["v_ana"][mask], 'k', label='Theory')
