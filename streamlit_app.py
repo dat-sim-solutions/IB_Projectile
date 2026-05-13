@@ -129,7 +129,7 @@ ax2.fill_between(data["t"], data["a_ana"] - data["a_uncert_abs"], data["a_ana"] 
 ax2.plot(data["t"], data["a_ana"], 'k')
 ax2.plot(data["t"], data["a_num"], 'g--')
 ax2.scatter(data["t"], data["a_noisy"], color='red', s=8, alpha=0.5)
-ax2.set_ylabel("Acceleration (m/s^2)"); ax2.grid(True, alpha=0.3)
+ax2.set_ylabel("Acceleration (m/s^2)"); ax2.legend(loc='lower right'); ax2.grid(True, alpha=0.3)
 
 # Position
 ax3.fill_between(data["t"], data["y_ana"] - data["y_uncert_abs"], data["y_ana"] + data["y_uncert_abs"], color='blue', alpha=0.15)
