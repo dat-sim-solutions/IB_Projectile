@@ -134,11 +134,12 @@ ax2.scatter(data["t"], data["a_noisy"], color='red', s=8, alpha=0.7, label='Sens
 ax2.set_ylabel("Acceleration (m/s^2)"); ax2.legend(loc='upper right'); ax2.grid(True, alpha=0.3)
 
 # Position
-ax3.fill_between(data["t"], data["y_ana"] - data["y_uncert_abs"], data["y_ana"] + data["y_uncert_abs"], color='blue', alpha=0.15)
-ax3.plot(data["t"], data["y_ana"], 'k')
-ax3.plot(data["t"], data["y_num"], 'g--')
-ax3.scatter(data["t"], data["y_noisy"], color='red', s=8, alpha=0.5)
-ax3.set_ylabel("Position (m)"); ax3.set_xlabel("Time (s)"); ax3.grid(True, alpha=0.3)
+ax3.fill_between(data["t"], data["y_ana"] - data["y_uncert_abs"], data["y_ana"] + data["y_uncert_abs"], 
+                 color='blue', alpha=0.3, label='Δv, Sensor Precision Envelope')
+ax3.plot(data["t"], data["y_ana"], 'k', label='Theory (Analytical)')
+ax3.plot(data["t"], data["y_num"], 'g--', label='Numerical (Euler)')
+ax3.scatter(data["t"], data["y_noisy"], color='red', s=8, alpha=0.7, label='Sensor Data')
+ax3.set_ylabel("Position (m)"); ax3.legend(loc='lower right'); ax3.grid(True, alpha=0.3); ax3.set_xlabel("Time (s)")
 
 # --- APPLY GLOBAL VIEW SETTINGS (The "Camera" Work) ---
 # Apply the X-axis zoom to all
