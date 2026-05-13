@@ -32,7 +32,7 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     """)
     
     st.write("**Absolute Uncertainty in Velocity:** $\Delta v$ from sensor")
-    st.write("**Absolute Uncertainty in Velocity** $\Delta v$ from set up propagation of experiment ($\Delta m, \Delta A$:)")
+    st.write("**Absolute Uncertainty in Velocity** $\Delta v$ from set up propagation in experiment ($\Delta m, \Delta A$:)")
     st.write("First for $v_t$. (from Theory of Power Law)")
     st.write(r"(from  $A = \frac{\pi}{4}d^2$ we have $\frac{\Delta A}{A} = 2 \frac{\Delta d}{d}$ via Theory of Power Law)")
     st.latex(r"\frac{\Delta v_t}{v_t} = \frac{1}{2} (\frac{\Delta m}{m} + \frac{\Delta A}{A}) \text{ is calculated}")
@@ -43,9 +43,10 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     st.latex(r"\frac{dv}{dv_{t}}=\tanh \left(\frac{gt}{v_{t}}\right)-\frac{gt}{v_{t}}\text{sech}^{2}\left(\frac{gt}{v_{t}}\right)")
     st.latex(r"\text{For a value } v \text{, the Theoretical Range is } v \pm \Delta v ")
 
-    st.write("**Absolute Uncertainty in acceleration** as a function of $v_t$")
+    st.write("**Absolute Uncertainty in acceleration** as a function of $v$")
     st.latex(r"\Delta a = \left| \frac{da}{dv} \right| \Delta v = \left( \frac{2kv}{m} \right) \Delta v \text{ with } a = g - \frac{k}{m}v^2")
-
+    st.write(r"There is one $\Delta a$ from sensor and from set up propagation depending on what \Delta you choose.")
+    
     st.info(r"""
     General Law of Uncertainty Propagation for $f(x,y,z)$:  
     $ \Delta f = \sqrt{\left(\frac{\partial f}{\partial x} \Delta x\right)^2 + \left(\frac{\partial f}{\partial y} \Delta y\right)^2 + \left(\frac{\partial f}{\partial z} \Delta z\right)^2} $
