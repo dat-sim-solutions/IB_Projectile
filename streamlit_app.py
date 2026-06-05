@@ -54,7 +54,39 @@ with st.expander("📘 View Mathematical & Numerical Model"):
     that simplified is the Power Law $\frac{\Delta f}{f} = |a| \frac{\Delta x}{x} + |b| \frac{\Delta y}{y} + |c| \frac{\Delta z}{z}$
     - For a general function of one variable $f(x)$ we have $\Delta f(x)= \left| \frac{\partial f}{\partial x} \right| \Delta x $
     """)
+
+with st.expander("📖 Scientific Workflow Guide (Inquiry-Based Lab Manual)"):
+    st.markdown("""
+    ### 🔬 How to Navigate This Digital Lab
     
+    This platform acts as a computational physics laboratory. To build a robust scientific inquiry, follow these three sequential phases:
+    
+    ---
+    
+    #### **Step 1: Define the Ideal Physical System**
+    * **Action:** Go to the sidebar and look under **🎯 Physical Parameters**.
+    * **Task:** Adjust the **Mass ($m$)** and **Cross-Sectional Area ($A$)** sliders. 
+    * **Cognitive Objective:** Establish your hypothesis. How do you expect changing the geometry ($A$) or inertia ($m$) will affect the terminal boundary conditions before running the numerical engine?
+    
+    #### **Step 2: Model the Real-World Uncertainties (Error Propagation)**
+    * **Action:** Locate the **📏 Instrument Precision** sections in the sidebar.
+    * **Task:** 
+        1. Input your physical measurements tolerances under **Scale ($\Delta m$)** and **Ruler ($\Delta d$)**.
+        2. Calibrate your measurement hardware using the **Position Sensor ($\Delta y$)** and **Velocity Sensor ($\Delta v$)** sliders.
+    * **Cognitive Objective:** Transition from an idealized mathematical vacuum to real experimental physics. This phase forces you to model how hardware limitations propagate error throughout your structural system.
+    
+    #### **Step 3: Run, Compare, and Evaluate the Data**
+    * **Action:** Analyze the generated 2D Analysis Plots and the **3D Digital Twin**.
+    * **Analytical Tasks:**
+        * **The Trajectory Plots:** Compare the **Theory (Analytical)** curves against the **Numerical (Euler)** models across the Velocity, Position, and Acceleration timelines. Note how they interact with the **Sensor Precision Envelopes**.
+        * **The Error Boundaries:** Inspect the Velocity graph to see how the real *Sensor Data* sits inside the *Error Boxes* relative to the analytical line.
+        * **Statistical Dispersion:** Scroll down to the **Residuals, Box, and Violin graphs** to evaluate the statistical spread and structural bias of your numerical simulation against the sensor expectations.
+        * **The 3D Digital Twin:** Use the real-time **Three.js** canvas to visually validate the physical kinematics of the limit velocity trajectory as a cohesive unit.
+    
+    ---
+    
+    💡 ***Research Directive:** If your physical sensor data falls completely outside the shaded Sensor Precision Envelope, you must re-evaluate your absolute instrument uncertainties or refine your Euler step constraints!*
+    """)
 
 # --- SIDEBAR: CONTROLS ---
 st.sidebar.header("🎯 Physical Parameters")
