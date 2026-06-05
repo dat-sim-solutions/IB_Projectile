@@ -60,6 +60,7 @@ with st.expander("📖 Scientific Workflow Guide (Inquiry-Based Lab Manual)"):
     ### 🔬 How to Navigate This Digital Lab
     
     This platform acts as a computational physics laboratory. To build a robust scientific inquiry, follow these three sequential phases:
+    
     ---
     #### **Step 1: Define the Ideal Physical System**
     * **Action:** Go to the sidebar and look under **🎯 Physical Parameters**.
