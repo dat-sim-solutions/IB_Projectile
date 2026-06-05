@@ -485,6 +485,24 @@ render_3d_simulation(data)
 status_color = "green" if 0.05 < data['cfl_limit'] else "red"
 st.sidebar.markdown(f"**Stability (CFL)**: dt < :{status_color}[{data['cfl_limit']:.4f}s]")
 
+st.sidebar.markdown("---")
+st.sidebar.write("📚 **Expand Your Lab Research!**")
+
+st.sidebar.markdown("""
+### 📚 Expand Your Lab Research!
+This digital lab is designed around principles of **educational psychology for science** to optimize inquiry-based learning.
+
+**You are invited to read and download the complete companion guidebook:**
+""")
+
+# This creates a native, clean button that opens your Zenodo link in a new tab
+st.sidebar.link_button(
+    label="Download Complete Guidebook (Zenodo)",
+    url="https://doi.org/10.5281/zenodo.20350983",  # Your exact DOI from Sin título.jpg
+    type="primary",  # Highlighted button style
+    use_container_width=True
+)
+
 # --- FOOTER / DEVELOPER INFO ---
 st.sidebar.divider()
 st.sidebar.markdown(f"**Developer:** Juan Avalos Carrión")
