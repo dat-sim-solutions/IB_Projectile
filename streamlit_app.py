@@ -60,9 +60,7 @@ with st.expander("📖 Scientific Workflow Guide (Inquiry-Based Lab Manual)"):
     ### 🔬 How to Navigate This Digital Lab
     
     This platform acts as a computational physics laboratory. To build a robust scientific inquiry, follow these three sequential phases:
-    
     ---
-    
     #### **Step 1: Define the Ideal Physical System**
     * **Action:** Go to the sidebar and look under **🎯 Physical Parameters**.
     * **Task:** Adjust the **Mass ($m$)** and **Cross-Sectional Area ($A$)** sliders. 
@@ -84,7 +82,6 @@ with st.expander("📖 Scientific Workflow Guide (Inquiry-Based Lab Manual)"):
         * **The 3D Digital Twin:** Use the real-time **Three.js** canvas to visually validate the physical kinematics of the limit velocity trajectory as a cohesive unit.
     
     ---
-    
     💡 ***Research Directive:** If your physical sensor data falls completely outside the shaded Sensor Precision Envelope, you must re-evaluate your absolute instrument uncertainties or refine your Euler step constraints!*
     """)
 
