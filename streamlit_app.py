@@ -491,8 +491,6 @@ st.sidebar.write("📚 **Expand Your Lab Research!**")
 st.sidebar.markdown("""
 ### 📚 Expand Your Lab Research!
 This digital lab is designed around principles of **educational psychology for science** to optimize inquiry-based learning.
-
-**You are invited to read and download the complete companion guidebook:**
 """)
 
 # This creates a native, clean button that opens your Zenodo link in a new tab
