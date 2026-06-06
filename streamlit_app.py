@@ -486,8 +486,6 @@ status_color = "green" if 0.05 < data['cfl_limit'] else "red"
 st.sidebar.markdown(f"**Stability (CFL)**: dt < :{status_color}[{data['cfl_limit']:.4f}s]")
 
 st.sidebar.markdown("---")
-st.sidebar.write("📚 **Expand Your Lab Research!**")
-
 st.sidebar.markdown("""
 ### 📚 Expand Your Lab Research!
 This digital lab is designed around principles of **educational psychology for science** to optimize inquiry-based learning.
